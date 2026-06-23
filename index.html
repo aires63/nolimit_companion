@@ -26,7 +26,7 @@
   --radius:   3px;
   --radius-lg: 5px;
 }
-
+ 
 /* ── RESET ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 16px; -webkit-text-size-adjust: 100%; }
@@ -36,12 +36,12 @@ body {
   color: var(--text);
   min-height: 100vh;
 }
-
+ 
 /* ── LAYOUT ── */
 #app { max-width: 480px; margin: 0 auto; padding: 0 0 72px; }
 .page { display: none; padding: 12px; }
 .page.active { display: block; }
-
+ 
 /* ── NAV ── */
 nav {
   position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
@@ -60,7 +60,7 @@ nav button {
 nav button svg { width: 20px; height: 20px; stroke: var(--text-muted); fill: none; stroke-width: 1.5; transition: stroke 0.15s; }
 nav button.active { color: var(--red); }
 nav button.active svg { stroke: var(--red); }
-
+ 
 /* ── PAGE HEADER ── */
 .page-header {
   display: flex; align-items: center; gap: 10px;
@@ -72,7 +72,7 @@ nav button.active svg { stroke: var(--red); }
   letter-spacing: 0.08em; color: var(--text);
 }
 .page-header .sub { font-size: 11px; color: var(--red); text-transform: uppercase; letter-spacing: 0.15em; margin-top: 1px; }
-
+ 
 /* ── SECTION LABEL (rouge plein) ── */
 .sec-label {
   display: block; background: var(--red); color: #fff;
@@ -80,14 +80,14 @@ nav button.active svg { stroke: var(--red); }
   letter-spacing: 0.12em; padding: 5px 10px;
   margin-bottom: 8px;
 }
-
+ 
 /* ── CARDS ── */
 .card {
   background: var(--bg2); border: 1px solid var(--border);
   border-radius: var(--radius-lg); padding: 12px; margin-bottom: 10px;
 }
 .card-red { border-color: var(--border-red); }
-
+ 
 /* ── TYPOGRAPHY ── */
 .label-sm {
   font-size: 10px; font-weight: 700; text-transform: uppercase;
@@ -95,7 +95,7 @@ nav button.active svg { stroke: var(--red); }
 }
 .val-lg { font-size: 24px; font-weight: 900; line-height: 1; }
 .val-md { font-size: 18px; font-weight: 700; }
-
+ 
 /* ── FORMS ── */
 label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
 input[type=text], input[type=number], select, textarea {
@@ -113,7 +113,7 @@ input:focus, select:focus, textarea:focus {
 .field label { display: block; margin-bottom: 4px; }
 .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
-
+ 
 /* ── BUTTONS ── */
 .btn {
   display: block; width: 100%; padding: 12px 14px;
@@ -131,7 +131,7 @@ input:focus, select:focus, textarea:focus {
 .btn-danger { background: transparent; color: var(--red); border-color: var(--border-red); }
 .btn-row { display: flex; gap: 7px; margin-bottom: 8px; }
 .btn-row .btn { flex: 1; margin-bottom: 0; }
-
+ 
 /* ── NUM STEPPER ── */
 .num-row { display: flex; align-items: center; gap: 6px; }
 .num-row input { flex: 1; text-align: center; font-size: 20px; font-weight: 700; padding: 10px 6px; }
@@ -144,7 +144,7 @@ input:focus, select:focus, textarea:focus {
 .num-btn:active { opacity: 0.7; }
 .num-btn.red { border-color: var(--red); color: var(--red); }
 .num-btn.green { border-color: var(--green); color: var(--green); }
-
+ 
 /* ── STAT ROW ── */
 .stat-row {
   display: flex; align-items: center; justify-content: space-between;
@@ -160,7 +160,7 @@ input:focus, select:focus, textarea:focus {
 }
 .stat-val-box.pos { color: var(--green); border-color: #1a4a2a; }
 .stat-val-box.neg { color: var(--red); border-color: var(--border-red); }
-
+ 
 /* ── MAIN STAT BLOCK ── */
 .main-stat-block {
   background: var(--red); padding: 5px 10px;
@@ -169,11 +169,11 @@ input:focus, select:focus, textarea:focus {
 }
 .main-stat-block .name { font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; color: #fff; }
 .main-stat-block .val { font-size: 18px; font-weight: 900; color: #fff; }
-
+ 
 /* ── HP BAR ── */
 .hp-bar { height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; }
 .hp-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
-
+ 
 /* ── BADGE ── */
 .badge {
   display: inline-block; padding: 2px 8px; border-radius: 2px;
@@ -182,7 +182,7 @@ input:focus, select:focus, textarea:focus {
 .badge-red { background: var(--red-dim); color: var(--red); border: 1px solid var(--border-red); }
 .badge-green { background: rgba(34,170,68,0.15); color: var(--green); border: 1px solid #1a4a2a; }
 .badge-gray { background: var(--bg3); color: var(--text-muted); border: 1px solid var(--border); }
-
+ 
 /* ── COMBAT CARDS ── */
 .combatant {
   background: var(--bg2); border: 1px solid var(--border);
@@ -207,7 +207,7 @@ input:focus, select:focus, textarea:focus {
 }
 .hp-btn.minus { border-color: var(--border-red); color: var(--red); }
 .hp-btn.plus  { border-color: #1a4a2a; color: var(--green); }
-
+ 
 /* ── WEAPON AMMO ── */
 .weapon-row {
   background: var(--bg3); border: 1px solid var(--border);
@@ -228,7 +228,7 @@ input:focus, select:focus, textarea:focus {
 }
 .ammo-btn:active { opacity: 0.7; }
 .ammo-empty { color: var(--red) !important; }
-
+ 
 /* ── TURN BANNER ── */
 .turn-banner {
   background: var(--red); color: #fff;
@@ -237,11 +237,11 @@ input:focus, select:focus, textarea:focus {
   margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em;
 }
 .round-tag { float: right; font-size: 11px; opacity: 0.8; padding-top: 2px; }
-
+ 
 /* ── EMPTY STATE ── */
 .empty { text-align: center; padding: 30px 16px; color: var(--text-muted); font-size: 13px; }
 .empty-icon { font-size: 36px; margin-bottom: 8px; opacity: 0.5; }
-
+ 
 /* ── PERSO CARD ── */
 .perso-card {
   background: var(--bg2); border: 1px solid var(--border);
@@ -250,7 +250,7 @@ input:focus, select:focus, textarea:focus {
 }
 .perso-card-name { font-size: 16px; font-weight: 900; color: var(--text); text-transform: uppercase; }
 .perso-card-role { font-size: 11px; color: var(--red); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2px; }
-
+ 
 /* ── DICE ROLLER ── */
 .dice-btn {
   background: var(--bg2); border: 2px solid var(--border);
@@ -267,7 +267,7 @@ input:focus, select:focus, textarea:focus {
 }
 .dice-result-num { font-size: 64px; font-weight: 900; color: var(--red); line-height: 1; }
 .dice-result-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 6px; }
-
+ 
 /* ── ROLE GRID ── */
 .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
 .role-card {
@@ -279,7 +279,7 @@ input:focus, select:focus, textarea:focus {
 .role-card.selected { border-color: var(--red); background: var(--red-dim); }
 .role-card-icon { font-size: 28px; margin-bottom: 5px; }
 .role-card-name { font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; }
-
+ 
 /* ── WIZARD ── */
 .wiz-header { margin-bottom: 12px; }
 .wiz-funnel-tag { font-size: 11px; color: var(--red); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 3px; }
@@ -287,7 +287,7 @@ input:focus, select:focus, textarea:focus {
 .wiz-step-name { color: var(--text); font-weight: 700; }
 .wiz-bar-track { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
 .wiz-bar-fill { height: 100%; background: var(--red); transition: width 0.4s; }
-
+ 
 .wiz-zone {
   background: var(--bg2); border: 1px solid var(--border);
   border-radius: var(--radius-lg); padding: 18px 14px;
@@ -295,14 +295,14 @@ input:focus, select:focus, textarea:focus {
 }
 .wiz-title { font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text); margin-bottom: 6px; }
 .wiz-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
-
+ 
 .wiz-result-card {
   background: var(--bg2); border: 1px solid var(--border);
   border-radius: var(--radius-lg); padding: 14px;
   margin-bottom: 10px;
 }
 .wiz-result-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); font-weight: 700; margin-bottom: 10px; }
-
+ 
 /* ── FACTION GRID ── */
 .faction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
 .faction-item {
@@ -316,7 +316,7 @@ input:focus, select:focus, textarea:focus {
   border-radius: var(--radius); padding: 3px 8px;
   font-size: 16px; font-weight: 900; color: var(--text); text-align: center; min-width: 38px;
 }
-
+ 
 /* ── TOAST ── */
 #toast {
   position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
@@ -327,14 +327,14 @@ input:focus, select:focus, textarea:focus {
   white-space: nowrap;
 }
 #toast.show { opacity: 1; }
-
+ 
 /* ── DIVIDER ── */
 hr { border: none; border-top: 1px solid var(--border); margin: 10px 0; }
-
+ 
 /* ── SCROLLABLE ── */
 select { color: var(--text); }
 option { background: var(--bg3); }
-
+ 
 /* ── ANIMATIONS ── */
 @keyframes roll {
   0% { transform: scale(0.8) rotate(-10deg); opacity: 0.5; }
@@ -346,7 +346,7 @@ option { background: var(--bg3); }
 </head>
 <body>
 <div id="app">
-
+ 
 <!-- ══ PAGE : PERSOS ══ -->
 <div id="page-perso" class="page active">
   <div class="page-header">
@@ -362,7 +362,7 @@ option { background: var(--bg3); }
   <div id="perso-create-view" style="display:none"></div>
   <div id="perso-sheet-view" style="display:none"></div>
 </div>
-
+ 
 <!-- ══ PAGE : COMBAT ══ -->
 <div id="page-combat" class="page">
   <div class="page-header"><h1>Combat</h1></div>
@@ -372,12 +372,20 @@ option { background: var(--bg3); }
       <label>Nom</label>
       <input type="text" id="comb-name" placeholder="Nom du combattant">
     </div>
+    <div class="field">
+      <label>Type</label>
+      <select id="comb-type" onchange="onCombTypeChange()">
+        <option value="pj">🧑 Joueur (PJ)</option>
+        <option value="allie">🤝 Allié (PNJ)</option>
+        <option value="ennemi">💀 Ennemi</option>
+      </select>
+    </div>
     <div class="row-3">
       <div class="field">
         <label>Initiative</label>
         <input type="number" id="comb-init" placeholder="0">
       </div>
-      <div class="field">
+      <div class="field" id="comb-pdv-field">
         <label>PdS max</label>
         <input type="number" id="comb-pdv" placeholder="10">
       </div>
@@ -400,7 +408,7 @@ option { background: var(--bg3); }
     </div>
   </div>
 </div>
-
+ 
 <!-- ══ PAGE : DÉS ══ -->
 <div id="page-des" class="page">
   <div class="page-header"><h1>Dés</h1></div>
@@ -445,7 +453,7 @@ option { background: var(--bg3); }
     </div>
   </div>
 </div>
-
+ 
 <!-- ══ PAGE : INFO ══ -->
 <div id="page-info" class="page">
   <div class="page-header"><h1>Infos</h1></div>
@@ -478,9 +486,9 @@ option { background: var(--bg3); }
     </div>
   </div>
 </div>
-
+ 
 </div><!-- /app -->
-
+ 
 <nav>
   <button class="active" onclick="showPage('perso',this)">
     <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
@@ -500,12 +508,12 @@ option { background: var(--bg3); }
   </button>
 </nav>
 <div id="toast"></div>
-
+ 
 <script>
 // ══════════════════════════════════════════════
 // DATA
 // ══════════════════════════════════════════════
-
+ 
 const ROLES = [
   { id:'porte-flingue', nom:'Porte-flingue', emoji:'🔫',
     capacite:'[Capacité du Porte-flingue — à renseigner avec le MJ]' },
@@ -524,7 +532,7 @@ const ROLES = [
   { id:'media', nom:'Média', emoji:'📡',
     capacite:'[Capacité du Média — à renseigner avec le MJ]' },
 ];
-
+ 
 const STATS_DEF = [
   { key:'force', label:'Force', color:'#cc1111', subs:[
     { key:'corps_a_corps', label:'Arme de corps à corps' },
@@ -563,7 +571,7 @@ const STATS_DEF = [
     { key:'premiers_soins',label:'Premiers soins' },
   ]},
 ];
-
+ 
 const FACTIONS_DEF = [
   { key:'f_corporatiste',  label:'Corporatiste' },
   { key:'f_force_ordre',   label:'Force de l\'Ordre' },
@@ -575,11 +583,11 @@ const FACTIONS_DEF = [
   { key:'f_bas_fond',      label:'Bas-fond' },
   { key:'f_nomade',        label:'Nomade' },
 ];
-
+ 
 const NOMS = ['Axel','Caine','Dax','Ferro','Ghost','Hera','Iko','Jade','Kira','Lax',
   'Mira','Nox','Ora','Pax','Raze','Sable','Thorn','Uma','Vex','Wren',
   'Xen','Yara','Zero','Zora','Brix','Cade','Drex','Elys','Fynn','Gael'];
-
+ 
 // ══════════════════════════════════════════════
 // STATE
 // ══════════════════════════════════════════════
@@ -590,20 +598,20 @@ let round = 1;
 let wizardStep = 0;
 let wizardPerso = null;
 let lastDice = { num: 0, label: '' };
-
+ 
 // ══════════════════════════════════════════════
 // UTILS
 // ══════════════════════════════════════════════
 function savePersos() { localStorage.setItem('nl_persos', JSON.stringify(persos)); }
 function sign(n) { return n > 0 ? '+' + n : '' + n; }
 function signColor(n) { return n > 0 ? 'var(--green)' : n < 0 ? 'var(--red)' : 'var(--text-muted)'; }
-
+ 
 function toast(msg) {
   const el = document.getElementById('toast');
   el.textContent = msg; el.classList.add('show');
   setTimeout(() => el.classList.remove('show'), 2200);
 }
-
+ 
 function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
@@ -611,7 +619,7 @@ function showPage(id, btn) {
   if (btn) btn.classList.add('active');
   if (id === 'des') renderWeaponDiceList();
 }
-
+ 
 function emptyPerso() {
   const p = {
     id: Date.now() + Math.random(),
@@ -646,9 +654,9 @@ function emptyPerso() {
   };
   return p;
 }
-
+ 
 function getRoleById(id) { return ROLES.find(r => r.id === id) || null; }
-
+ 
 // ══════════════════════════════════════════════
 // WIZARD — DÉFINITION DES ÉTAPES
 // ══════════════════════════════════════════════
@@ -665,7 +673,7 @@ const WIZ_STEPS = [
   { id:'recap',    label:'Récapitulatif' },
 ];
 const WIZ_TOTAL = WIZ_STEPS.length;
-
+ 
 // ══════════════════════════════════════════════
 // WIZARD — NAVIGATION
 // ══════════════════════════════════════════════
@@ -683,14 +691,14 @@ function showWizard(editIdx) {
   v.style.display = 'block';
   renderWizard();
 }
-
+ 
 function cancelCreate() {
   document.getElementById('perso-create-view').style.display = 'none';
   document.getElementById('perso-sheet-view').style.display = 'none';
   document.getElementById('perso-list-view').style.display = 'block';
   renderPersoList();
 }
-
+ 
 function wizardNext() {
   syncWizardStep();
   if (wizardStep < WIZ_TOTAL - 1) { wizardStep++; renderWizard(); }
@@ -701,7 +709,7 @@ function wizardBack() {
   if (wizardStep === 0) { cancelCreate(); return; }
   wizardStep--; renderWizard();
 }
-
+ 
 function saveWizardPerso() {
   syncWizardStep();
   wizardPerso.pdv_cur = Math.min(wizardPerso.pdv_cur || wizardPerso.pdv_max, wizardPerso.pdv_max);
@@ -712,14 +720,14 @@ function saveWizardPerso() {
   toast('✔ ' + (wizardPerso.nom || 'Personnage') + ' sauvegardé');
   cancelCreate();
 }
-
+ 
 // Sync les champs selon l'étape courante
 function syncWizardStep() {
   const step = WIZ_STEPS[wizardStep];
   const g = id => document.getElementById(id);
   const gv = id => { const el = g(id); return el ? el.value : ''; };
   const gi = id => { const el = g(id); return el ? (parseInt(el.value) || 0) : 0; };
-
+ 
   switch(step.id) {
     case 'identite':
       wizardPerso.nom         = gv('w-nom');
@@ -767,7 +775,7 @@ function syncWizardStep() {
       break;
   }
 }
-
+ 
 // ══════════════════════════════════════════════
 // WIZARD — RENDER
 // ══════════════════════════════════════════════
@@ -777,13 +785,13 @@ function renderWizard() {
   const isLast = wizardStep === WIZ_TOTAL - 1;
   const backLabel = wizardStep === 0 ? 'Annuler' : '← Retour';
   const nextLabel = isLast ? 'Terminer ✔' : 'Suivant →';
-
+ 
   const header = `
     <div class="wiz-header">
       <div class="wiz-step-info">Étape ${wizardStep+1}/${WIZ_TOTAL} · <span class="wiz-step-name">${step.label}</span></div>
       <div class="wiz-bar-track"><div class="wiz-bar-fill" style="width:${pct}%"></div></div>
     </div>`;
-
+ 
   let body = '';
   switch(step.id) {
     case 'role':     body = renderStepRole();     break;
@@ -797,17 +805,17 @@ function renderWizard() {
     case 'equip':    body = renderStepEquip();    break;
     case 'recap':    body = renderStepRecap();    break;
   }
-
+ 
   const nav = `
     <div class="btn-row" style="margin-top:6px">
       <button class="btn" onclick="wizardBack()">${backLabel}</button>
       <button class="btn btn-red" onclick="wizardNext()">${nextLabel}</button>
     </div>`;
-
+ 
   document.getElementById('perso-create-view').innerHTML = header + body + nav;
   window.scrollTo(0, 0);
 }
-
+ 
 // Étape : Rôle
 function renderStepRole() {
   return `
@@ -829,7 +837,7 @@ function renderStepRole() {
       </div>` : ''}`;
 }
 function selectRole(id) { wizardPerso.role_id = id; renderWizard(); }
-
+ 
 // Étape : Identité
 function renderStepIdentite() {
   return `
@@ -858,7 +866,7 @@ function randomNom() {
   const el = document.getElementById('w-nom');
   if (el) { el.value = n; wizardPerso.nom = n; }
 }
-
+ 
 // Étape : Profil
 function renderStepProfil() {
   const fields = [
@@ -879,7 +887,7 @@ function renderStepProfil() {
         </div>`).join('')}
     </div>`;
 }
-
+ 
 // Étape : Stats principales
 function renderStepStats() {
   const allKeys = ['force','reflexes','mouvement','volonte','empathie','technique','intelligence'];
@@ -914,7 +922,7 @@ function adjustStat(key, delta) {
   const el = document.getElementById('w-' + key);
   if (el) el.value = wizardPerso[key];
 }
-
+ 
 // Étape : Sous-stats
 function renderStepSubstats() {
   return `
@@ -961,7 +969,7 @@ function adjustSub(key, delta) {
     if (lbl) lbl.textContent = 'Total : ' + sign((wizardPerso[parentKey]||0) + (wizardPerso[key]||0));
   }
 }
-
+ 
 // Étape : Valeurs de combat
 function renderStepCombat() {
   return `
@@ -993,7 +1001,7 @@ function renderStepCombat() {
       </div>
     </div>`;
 }
-
+ 
 // Étape : Factions
 function renderStepFactions() {
   return `
@@ -1010,7 +1018,7 @@ function renderStepFactions() {
       </div>
     </div>`;
 }
-
+ 
 // Étape : Atouts
 function renderStepAtouts() {
   return `
@@ -1030,7 +1038,7 @@ function renderStepAtouts() {
         </div>`).join('')}
     </div>`;
 }
-
+ 
 // Étape : Équipement
 function renderStepEquip() {
   const armes = wizardPerso.armes || [];
@@ -1059,7 +1067,7 @@ function renderStepEquip() {
       <textarea id="w-notes" rows="3" style="resize:vertical" placeholder="Notes libres...">${wizardPerso.notes||''}</textarea>
     </div>`;
 }
-
+ 
 function renderWizArme(a, i) {
   return `
     <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:10px;margin-bottom:7px">
@@ -1088,7 +1096,7 @@ function renderWizArme(a, i) {
       </div>
     </div>`;
 }
-
+ 
 function addWizArme() {
   syncWizardStep();
   if (!wizardPerso.armes) wizardPerso.armes = [];
@@ -1102,7 +1110,7 @@ function removeWizArme(i) {
   const el = document.getElementById('wiz-armes-list');
   if (el) el.innerHTML = wizardPerso.armes.map((a,i) => renderWizArme(a,i)).join('');
 }
-
+ 
 // Étape : Récap
 function renderStepRecap() {
   const p = wizardPerso;
@@ -1115,7 +1123,7 @@ function renderStepRecap() {
       <div style="font-size:18px;font-weight:900;color:${col}">${sign(v)}</div>
     </div>`;
   }).join('');
-
+ 
   return `
     <div class="wiz-zone" style="padding:14px;text-align:left">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
@@ -1156,7 +1164,7 @@ function renderStepRecap() {
       </div>`).join('')}
     </div>` : ''}`;
 }
-
+ 
 // ══════════════════════════════════════════════
 // LISTE DES PERSOS
 // ══════════════════════════════════════════════
@@ -1198,14 +1206,14 @@ function renderPersoList() {
     </div>`;
   }).join('');
 }
-
+ 
 function deletePerso(i) {
   if (confirm('Supprimer ' + (persos[i].nom || 'ce personnage') + ' ?')) {
     persos.splice(i, 1); savePersos(); renderPersoList();
     toast('Personnage supprimé.');
   }
 }
-
+ 
 // ══════════════════════════════════════════════
 // FICHE COMPLÈTE
 // ══════════════════════════════════════════════
@@ -1215,11 +1223,11 @@ function showSheet(i) {
   const hpPct = p.pdv_max ? Math.round((p.pdv_cur||p.pdv_max)/p.pdv_max*100) : 100;
   const hpCol = hpPct > 50 ? 'var(--green)' : hpPct > 25 ? '#d4860a' : 'var(--red)';
   const risPct = p.risque_max ? Math.round((p.risque_cur||p.risque_max)/p.risque_max*100) : 100;
-
+ 
   document.getElementById('perso-list-view').style.display = 'none';
   const sv = document.getElementById('perso-sheet-view');
   sv.style.display = 'block';
-
+ 
   // Stats grid
   const statsHtml = STATS_DEF.map(s => {
     const v = p[s.key] || 0;
@@ -1239,7 +1247,7 @@ function showSheet(i) {
       }).join('')}
     </div>`;
   }).join('');
-
+ 
   // Factions
   const factHtml = FACTIONS_DEF.filter(f => p[f.key]).map(f =>
     `<span style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:4px 10px;font-size:12px;display:inline-flex;align-items:center;gap:5px">
@@ -1247,7 +1255,7 @@ function showSheet(i) {
       <span style="font-weight:900;color:var(--red)">${p[f.key]}</span>
     </span>`
   ).join('');
-
+ 
   // Atouts
   const atotsHtml = [1,2,3].filter(n => p['atout'+n+'_nom']).map(n =>
     `<div style="padding:8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px">
@@ -1255,10 +1263,10 @@ function showSheet(i) {
       <div style="font-size:12px;color:var(--text-dim)">${p['atout'+n+'_desc']||''}</div>
     </div>`
   ).join('');
-
+ 
   sv.innerHTML = `
     <button class="btn" onclick="cancelCreate()" style="margin-bottom:10px">← Retour</button>
-
+ 
     <!-- Identité + Rôle -->
     <div class="card">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
@@ -1275,7 +1283,7 @@ function showSheet(i) {
         <div style="font-size:12px;color:var(--text-dim);line-height:1.5">${role.capacite}</div>
       </div>` : ''}
     </div>
-
+ 
     <!-- PdS + Risque -->
     <div class="card">
       <span class="sec-label">Points de vie & Ressources</span>
@@ -1317,13 +1325,13 @@ function showSheet(i) {
         </div>
       </div>
     </div>
-
+ 
     <!-- Stats -->
     <div class="card">
       <span class="sec-label">Statistiques</span>
       ${statsHtml}
     </div>
-
+ 
     <!-- Profil -->
     ${(p.evenement||p.motivations||p.qualites||p.defauts) ? `<div class="card">
       <span class="sec-label">Profil</span>
@@ -1334,16 +1342,16 @@ function showSheet(i) {
       ${p.liens_pos   ? `<div style="margin-bottom:7px"><div style="font-size:10px;text-transform:uppercase;color:var(--text-muted)">Liens Positifs</div><div style="font-size:13px;margin-top:2px">${p.liens_pos}</div></div>` : ''}
       ${p.liens_neg   ? `<div><div style="font-size:10px;text-transform:uppercase;color:var(--text-muted)">Liens Négatifs</div><div style="font-size:13px;margin-top:2px">${p.liens_neg}</div></div>` : ''}
     </div>` : ''}
-
+ 
     <!-- Factions -->
     ${factHtml ? `<div class="card">
       <span class="sec-label">Factions</span>
       <div style="display:flex;flex-wrap:wrap;gap:6px">${factHtml}</div>
     </div>` : ''}
-
+ 
     <!-- Atouts -->
     ${atotsHtml ? `<div class="card"><span class="sec-label">Atouts</span>${atotsHtml}</div>` : ''}
-
+ 
     <!-- Équipement -->
     <div class="card">
       <span class="sec-label">Armes</span>
@@ -1372,15 +1380,15 @@ function showSheet(i) {
         💰 <b>${p.credits||0}</b> crédits
       </div>
     </div>
-
+ 
     ${p.notes ? `<div class="card"><span class="sec-label">Notes</span><div style="font-size:13px;white-space:pre-wrap;color:var(--text-dim)">${p.notes}</div></div>` : ''}
-
+ 
     <div class="btn-row">
       <button class="btn btn-red" onclick="addPersoToCombat(${i});showPage('combat',document.querySelector('nav button:nth-child(2)'))">→ Combat</button>
       <button class="btn" onclick="showWizard(${i})">Éditer</button>
     </div>`;
 }
-
+ 
 function changeSheetHP(i, d) {
   persos[i].pdv_cur = Math.max(0, Math.min(persos[i].pdv_max, (persos[i].pdv_cur||persos[i].pdv_max)+d));
   savePersos(); showSheet(i);
@@ -1409,17 +1417,29 @@ function reloadPersoAmmo(pi, ai) {
   persos[pi].armes[ai].ammo_cur = persos[pi].armes[ai].ammo_max;
   savePersos(); showSheet(pi);
 }
-
+ 
 // ══════════════════════════════════════════════
 // COMBAT
 // ══════════════════════════════════════════════
+function onCombTypeChange() {
+  const t = document.getElementById('comb-type').value;
+  document.getElementById('comb-pdv-field').style.display = t === 'ennemi' ? 'none' : '';
+}
+ 
 function addCombatant() {
   const name  = document.getElementById('comb-name').value.trim();
   if (!name) { toast('Saisis un nom !'); return; }
+  const type  = document.getElementById('comb-type').value;
   const init  = parseInt(document.getElementById('comb-init').value)  || 0;
-  const pdv   = parseInt(document.getElementById('comb-pdv').value)   || 10;
   const armure= parseInt(document.getElementById('comb-armure').value)|| 0;
-  combatants.push({ name, init, pdv_cur:pdv, pdv_max:pdv, armure, risque_cur:4, risque_max:4, armes:[], debufs:[] });
+  let c;
+  if (type === 'ennemi') {
+    c = { name, type, init, armure, dmg_taken: 0, armes:[], debufs:[] };
+  } else {
+    const pdv = parseInt(document.getElementById('comb-pdv').value) || 10;
+    c = { name, type, init, pdv_cur:pdv, pdv_max:pdv, armure, risque_cur:4, risque_max:4, armes:[], debufs:[] };
+  }
+  combatants.push(c);
   combatants.sort((a,b) => b.init - a.init);
   document.getElementById('comb-name').value = '';
   document.getElementById('comb-init').value = '';
@@ -1428,7 +1448,7 @@ function addCombatant() {
   renderCombat(); renderWeaponDiceList();
   toast(name + ' ajouté !');
 }
-
+ 
 function addPersoToCombat(idx) {
   const p    = persos[idx];
   const init = parseInt(prompt('Initiative pour ' + (p.nom||'ce perso') + ' :')) || 0;
@@ -1443,53 +1463,71 @@ function addPersoToCombat(idx) {
   renderCombat(); renderWeaponDiceList();
   toast((p.nom||'Perso') + ' → Combat');
 }
-
+ 
 function rollAllInit() {
   combatants.forEach(c => c.init = Math.floor(Math.random()*20)+1);
   combatants.sort((a,b) => b.init - a.init);
   currentTurn = 0; round = 1; renderCombat();
   toast('Initiatives tirées !');
 }
-
+ 
 function nextTurn() {
   if (!combatants.length) return;
   currentTurn = (currentTurn+1) % combatants.length;
   if (currentTurn === 0) round++;
   renderCombat();
 }
-
+ 
 function clearCombat() {
   if (!confirm('Effacer tout le combat ?')) return;
   combatants = []; currentTurn = 0; round = 1;
   renderCombat(); renderWeaponDiceList();
 }
-
+ 
 function removeCombatant(i) {
   combatants.splice(i, 1);
   if (currentTurn >= combatants.length && combatants.length) currentTurn = 0;
   renderCombat(); renderWeaponDiceList();
 }
-
+ 
 function changeCombatHP(i, d) {
-  // Armure absorbe les dégâts entrants
-  const actual = d < 0 ? Math.min(d + (combatants[i].armure||0), 0) : d;
-  combatants[i].pdv_cur = Math.max(0, Math.min(combatants[i].pdv_max, combatants[i].pdv_cur + actual));
-  if (combatants[i].persoIdx !== undefined) {
-    persos[combatants[i].persoIdx].pdv_cur = combatants[i].pdv_cur; savePersos();
+  const c = combatants[i];
+  if (c.type === 'ennemi') {
+    // Pour les ennemis : on cumule les dégâts subis (armure absorbe quand même)
+    const actual = d < 0 ? Math.min(d + (c.armure||0), 0) : d;
+    c.dmg_taken = Math.max(0, (c.dmg_taken||0) - actual); // actual est négatif pour des dégâts
+  } else {
+    const actual = d < 0 ? Math.min(d + (c.armure||0), 0) : d;
+    c.pdv_cur = Math.max(0, Math.min(c.pdv_max, c.pdv_cur + actual));
+    if (c.persoIdx !== undefined) {
+      persos[c.persoIdx].pdv_cur = c.pdv_cur; savePersos();
+    }
   }
   renderCombat();
 }
-
+ 
 function promptCombatHP(i) {
-  const v = prompt('Dégâts / soins pour ' + combatants[i].name + '\n(négatif = dégâts, positif = soins) :');
-  if (v !== null) { const d = parseInt(v); if (!isNaN(d)) changeCombatHP(i, d); }
+  const c = combatants[i];
+  const label = c.type === 'ennemi'
+    ? 'Dégâts infligés à ' + c.name + '\n(nombre positif) :'
+    : 'Dégâts / soins pour ' + c.name + '\n(négatif = dégâts, positif = soins) :';
+  const v = prompt(label);
+  if (v !== null) {
+    const d = parseInt(v);
+    if (!isNaN(d)) changeCombatHP(i, c.type === 'ennemi' ? -Math.abs(d) : d);
+  }
 }
-
+ 
+function resetEnemyDmg(i) {
+  combatants[i].dmg_taken = 0;
+  renderCombat();
+}
+ 
 function changeRisque(i, d) {
   combatants[i].risque_cur = Math.max(0, Math.min(combatants[i].risque_max, combatants[i].risque_cur + d));
   renderCombat();
 }
-
+ 
 function changeAmmo(ci, ai, d) {
   const a = combatants[ci].armes[ai];
   a.ammo_cur = Math.max(0, Math.min(a.ammo_max, (a.ammo_cur||0)+d));
@@ -1499,7 +1537,7 @@ function changeAmmo(ci, ai, d) {
   }
   renderCombat();
 }
-
+ 
 function reloadAmmo(ci, ai) {
   combatants[ci].armes[ai].ammo_cur = combatants[ci].armes[ai].ammo_max;
   if (combatants[ci].persoIdx !== undefined) {
@@ -1507,29 +1545,29 @@ function reloadAmmo(ci, ai) {
   }
   renderCombat(); toast('Rechargé !');
 }
-
+ 
 function renderCombat() {
   const list   = document.getElementById('comb-list');
   const banner = document.getElementById('turn-banner');
   const ctrl   = document.getElementById('comb-controls');
-
+ 
   if (!combatants.length) {
     list.innerHTML = `<div class="empty"><div class="empty-icon">🎯</div>Aucun combattant.</div>`;
     banner.style.display = 'none'; ctrl.style.display = 'none'; return;
   }
-
+ 
   const active = combatants[currentTurn % combatants.length];
   banner.style.display = 'block';
   banner.innerHTML = `<span class="round-tag">Round ${round}</span>▶ ${active.name}`;
   ctrl.style.display = 'block';
-
+ 
   list.innerHTML = combatants.map((c, i) => {
-    const isAct = i === currentTurn % combatants.length;
-    const dead  = c.pdv_cur <= 0;
-    const hpPct = c.pdv_max ? Math.round(c.pdv_cur/c.pdv_max*100) : 100;
-    const hpCol = hpPct > 50 ? 'var(--green)' : hpPct > 25 ? '#d4860a' : 'var(--red)';
-    const risPct= c.risque_max ? Math.round(c.risque_cur/c.risque_max*100) : 100;
-
+    const isAct  = i === currentTurn % combatants.length;
+    const isEnemy = c.type === 'ennemi';
+    const dead   = !isEnemy && c.pdv_cur <= 0;
+    const typeTag = isEnemy ? '💀 ENNEMI' : c.type === 'allie' ? '🤝 ALLIÉ' : '🧑 PJ';
+    const typeCol = isEnemy ? 'var(--red)' : c.type === 'allie' ? '#d4860a' : 'var(--green)';
+ 
     const armesHtml = c.armes && c.armes.length ? c.armes.map((a,ai) => `
       <div class="weapon-row" style="margin-bottom:4px">
         <div class="weapon-row-top">
@@ -1546,20 +1584,31 @@ function renderCombat() {
           <button class="ammo-btn" onclick="reloadAmmo(${i},${ai})" title="Recharger" style="font-size:13px;width:auto;padding:0 8px">↺</button>
         </div>
       </div>`).join('') : '';
-
-    return `<div class="combatant${isAct?' active-turn':''}${dead?' dead':''}">
-      <div class="comb-top">
-        <div class="comb-init">${c.init}</div>
-        <div style="flex:1">
-          <div class="comb-name">${c.name}${dead?' ☠':''}</div>
-          ${c.role ? `<div class="comb-role">${c.role}</div>` : ''}
+ 
+    // Bloc HP selon type
+    let hpBlock;
+    if (isEnemy) {
+      const dmg = c.dmg_taken || 0;
+      hpBlock = `<div style="background:var(--red-dim);border:1px solid var(--border-red);border-radius:var(--radius);padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px">
+        <div>
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--red);font-weight:700;margin-bottom:2px">Dégâts subis</div>
+          <div style="font-size:28px;font-weight:900;color:var(--red);line-height:1">${dmg > 0 ? '−' : ''}${dmg}</div>
+          <div style="font-size:10px;color:var(--text-muted);margin-top:2px">Le MJ décide de la mort</div>
         </div>
-        <div style="display:flex;gap:4px;align-items:center">
-          <span style="font-size:11px;color:var(--text-muted)">Arm:${c.armure||0}</span>
-          <button onclick="removeCombatant(${i})" style="background:transparent;border:none;color:var(--text-muted);font-size:16px;cursor:pointer;padding:4px">✕</button>
+        <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">
+          <div style="display:flex;gap:4px">
+            <div class="hp-btn minus" onclick="changeCombatHP(${i},-1)" style="width:36px;height:36px;font-size:20px">−</div>
+            <div class="hp-btn plus"  onclick="changeCombatHP(${i},+1)" style="width:36px;height:36px;font-size:20px">+</div>
+            <div class="hp-btn"       onclick="promptCombatHP(${i})" style="font-size:12px;width:36px;height:36px">±</div>
+          </div>
+          <button onclick="resetEnemyDmg(${i})" style="background:transparent;border:1px solid var(--border);border-radius:var(--radius);color:var(--text-muted);font-size:10px;padding:3px 8px;cursor:pointer">Réinitialiser</button>
         </div>
-      </div>
-      <div class="comb-bars">
+      </div>`;
+    } else {
+      const hpPct = c.pdv_max ? Math.round(c.pdv_cur/c.pdv_max*100) : 100;
+      const hpCol = hpPct > 50 ? 'var(--green)' : hpPct > 25 ? '#d4860a' : 'var(--red)';
+      const risPct= c.risque_max ? Math.round(c.risque_cur/c.risque_max*100) : 100;
+      hpBlock = `<div class="comb-bars">
         <div class="comb-bar-row">
           <span class="comb-bar-label">PdS</span>
           <div class="hp-bar" style="flex:1"><div class="hp-fill" style="width:${hpPct}%;background:${hpCol}"></div></div>
@@ -1579,12 +1628,28 @@ function renderCombat() {
             <div class="hp-btn plus"  onclick="changeRisque(${i},+1)">+</div>
           </div>
         </div>
+      </div>`;
+    }
+ 
+    return `<div class="combatant${isAct?' active-turn':''}${dead?' dead':''}">
+      <div class="comb-top">
+        <div class="comb-init">${c.init}</div>
+        <div style="flex:1">
+          <div class="comb-name">${c.name}${dead?' ☠':''}</div>
+          <div style="font-size:10px;text-transform:uppercase;font-weight:700;color:${typeCol};letter-spacing:0.08em">${typeTag}</div>
+          ${c.role ? `<div class="comb-role">${c.role}</div>` : ''}
+        </div>
+        <div style="display:flex;gap:4px;align-items:center">
+          <span style="font-size:11px;color:var(--text-muted)">Arm:${c.armure||0}</span>
+          <button onclick="removeCombatant(${i})" style="background:transparent;border:none;color:var(--text-muted);font-size:16px;cursor:pointer;padding:4px">✕</button>
+        </div>
       </div>
+      ${hpBlock}
       ${armesHtml}
     </div>`;
   }).join('');
 }
-
+ 
 // ══════════════════════════════════════════════
 // DÉS
 // ══════════════════════════════════════════════
@@ -1597,7 +1662,7 @@ function rollDice(faces) {
   void el.offsetWidth; // force reflow
   el.classList.add('rolling');
   lastDice = { num: r, label: 'd' + faces };
-
+ 
   // Coloration critique pour d20
   if (faces === 20) {
     el.style.color = r === 20 ? 'var(--green)' : r === 1 ? '#ff4444' : 'var(--red)';
@@ -1605,7 +1670,7 @@ function rollDice(faces) {
     el.style.color = 'var(--red)';
   }
 }
-
+ 
 function rollMulti() {
   const count = parseInt(document.getElementById('multi-count').value) || 1;
   const type  = parseInt(document.getElementById('multi-type').value)  || 6;
@@ -1614,7 +1679,7 @@ function rollMulti() {
   document.getElementById('multi-results').innerHTML =
     `<span style="color:var(--text-muted)">Résultats : </span>${rolls.join(' + ')} = <b style="color:var(--red);font-size:16px">${total}</b>`;
 }
-
+ 
 function renderWeaponDiceList() {
   const el = document.getElementById('weapon-dice-list');
   if (!el) return;
@@ -1634,7 +1699,7 @@ function renderWeaponDiceList() {
       </button>
     </div>`).join('')).join('');
 }
-
+ 
 function rollWeaponDmg(diceStr, combName, armeName) {
   // Parse simple strings: "1d6", "2d8+2", "4 pts" etc.
   const m = diceStr.match(/(\d+)d(\d+)([+-]\d+)?/i);
@@ -1655,7 +1720,7 @@ function rollWeaponDmg(diceStr, combName, armeName) {
   el.classList.remove('rolling'); void el.offsetWidth; el.classList.add('rolling');
   showPage('des', document.querySelector('nav button:nth-child(3)'));
 }
-
+ 
 // ══════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════
@@ -1664,3 +1729,4 @@ renderCombat();
 </script>
 </body>
 </html>
+ 
