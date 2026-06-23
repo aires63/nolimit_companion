@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>No Limit — Aceryth</title>
+<style>
+/* ── TOKENS ── */
+:root {
+  --bg:       #0c0c0c;
+  --bg2:      #141414;
+  --bg3:      #1c1c1c;
+  --bg4:      #242424;
+  --red:      #cc1111;
+  --red2:     #991111;
+  --red-dim:  rgba(204,17,17,0.12);
+  --red-glow: rgba(204,17,17,0.3);
+  --text:     #e0e0e0;
+  --text-dim: #aaa;
+  --text-muted: #666;
+  --border:   #2a2a2a;
+  --border-red: #4a1111;
+  --gold:     #c8a020;
+  --green:    #22aa44;
+  --blue:     #2266cc;
+  --radius:   3px;
+  --radius-lg: 5px;
+}
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Arial', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── LAYOUT ── */
+#app { max-width: 480px; margin: 0 auto; padding: 0 0 72px; }
+.page { display: none; padding: 12px; }
+.page.active { display: block; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 480px;
+  background: #0a0a0a;
+  border-top: 2px solid var(--red);
+  display: flex; z-index: 100;
+}
+nav button {
+  flex: 1; padding: 11px 4px 9px; background: transparent; border: none;
+  color: var(--text-muted); font-size: 9px; font-weight: bold;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px;
+  transition: color 0.15s;
+}
+nav button svg { width: 20px; height: 20px; stroke: var(--text-muted); fill: none; stroke-width: 1.5; transition: stroke 0.15s; }
+nav button.active { color: var(--red); }
+nav button.active svg { stroke: var(--red); }
+
+/* ── PAGE HEADER ── */
+.page-header {
+  display: flex; align-items: center; gap: 10px;
+  border-bottom: 2px solid var(--red);
+  padding-bottom: 10px; margin-bottom: 14px;
+}
+.page-header h1 {
+  font-size: 20px; font-weight: 900; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--text);
+}
+.page-header .sub { font-size: 11px; color: var(--red); text-transform: uppercase; letter-spacing: 0.15em; margin-top: 1px; }
+
+/* ── SECTION LABEL (rouge plein) ── */
+.sec-label {
+  display: block; background: var(--red); color: #fff;
+  font-size: 11px; font-weight: 900; text-transform: uppercase;
+  letter-spacing: 0.12em; padding: 5px 10px;
+  margin-bottom: 8px;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 12px; margin-bottom: 10px;
+}
+.card-red { border-color: var(--border-red); }
+
+/* ── TYPOGRAPHY ── */
+.label-sm {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--text-muted);
+}
+.val-lg { font-size: 24px; font-weight: 900; line-height: 1; }
+.val-md { font-size: 18px; font-weight: 700; }
+
+/* ── FORMS ── */
+label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+input[type=text], input[type=number], select, textarea {
+  width: 100%; padding: 9px 11px; border: 1px solid var(--border);
+  border-radius: var(--radius); background: var(--bg3);
+  color: var(--text); font-size: 14px; font-family: Arial, sans-serif;
+  appearance: none; -webkit-appearance: none;
+  transition: border-color 0.15s;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none; border-color: var(--red);
+  box-shadow: 0 0 0 2px var(--red-dim);
+}
+.field { margin-bottom: 10px; }
+.field label { display: block; margin-bottom: 4px; }
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+
+/* ── BUTTONS ── */
+.btn {
+  display: block; width: 100%; padding: 12px 14px;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--bg3); color: var(--text);
+  font-size: 13px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; cursor: pointer; text-align: center;
+  margin-bottom: 7px; -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.12s, transform 0.08s;
+}
+.btn:active { opacity: 0.75; transform: scale(0.98); }
+.btn-red { background: var(--red); color: #fff; border-color: var(--red2); }
+.btn-outline-red { background: transparent; color: var(--red); border-color: var(--red); }
+.btn-sm { padding: 7px 11px; font-size: 11px; width: auto; display: inline-block; margin-bottom: 0; }
+.btn-danger { background: transparent; color: var(--red); border-color: var(--border-red); }
+.btn-row { display: flex; gap: 7px; margin-bottom: 8px; }
+.btn-row .btn { flex: 1; margin-bottom: 0; }
+
+/* ── NUM STEPPER ── */
+.num-row { display: flex; align-items: center; gap: 6px; }
+.num-row input { flex: 1; text-align: center; font-size: 20px; font-weight: 700; padding: 10px 6px; }
+.num-btn {
+  width: 40px; height: 40px; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--bg3); color: var(--text); font-size: 20px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; -webkit-tap-highlight-color: transparent; -webkit-user-select: none;
+}
+.num-btn:active { opacity: 0.7; }
+.num-btn.red { border-color: var(--red); color: var(--red); }
+.num-btn.green { border-color: var(--green); color: var(--green); }
+
+/* ── STAT ROW ── */
+.stat-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+}
+.stat-row:last-child { border-bottom: none; }
+.stat-name { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+.stat-parent { font-size: 10px; color: var(--red); text-transform: uppercase; letter-spacing: 0.08em; }
+.stat-val-box {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 4px 10px;
+  font-size: 16px; font-weight: 900; min-width: 44px; text-align: center;
+}
+.stat-val-box.pos { color: var(--green); border-color: #1a4a2a; }
+.stat-val-box.neg { color: var(--red); border-color: var(--border-red); }
+
+/* ── MAIN STAT BLOCK ── */
+.main-stat-block {
+  background: var(--red); padding: 5px 10px;
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 2px;
+}
+.main-stat-block .name { font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; color: #fff; }
+.main-stat-block .val { font-size: 18px; font-weight: 900; color: #fff; }
+
+/* ── HP BAR ── */
+.hp-bar { height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; }
+.hp-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
+
+/* ── BADGE ── */
+.badge {
+  display: inline-block; padding: 2px 8px; border-radius: 2px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+}
+.badge-red { background: var(--red-dim); color: var(--red); border: 1px solid var(--border-red); }
+.badge-green { background: rgba(34,170,68,0.15); color: var(--green); border: 1px solid #1a4a2a; }
+.badge-gray { background: var(--bg3); color: var(--text-muted); border: 1px solid var(--border); }
+
+/* ── COMBAT CARDS ── */
+.combatant {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 10px; margin-bottom: 8px;
+}
+.combatant.active-turn { border-color: var(--red); border-width: 2px; }
+.combatant.dead { opacity: 0.45; }
+.comb-top { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 7px; }
+.comb-init { font-size: 22px; font-weight: 900; color: var(--red); min-width: 30px; }
+.comb-name { font-size: 15px; font-weight: 700; }
+.comb-role { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.comb-bars { display: flex; flex-direction: column; gap: 5px; margin-bottom: 7px; }
+.comb-bar-row { display: flex; align-items: center; gap: 8px; }
+.comb-bar-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); min-width: 52px; }
+.comb-bar-val { font-size: 12px; font-weight: 700; min-width: 38px; text-align: right; }
+.hp-btns { display: flex; gap: 4px; }
+.hp-btn {
+  width: 32px; height: 32px; border-radius: var(--radius); border: 1px solid var(--border);
+  font-size: 17px; font-weight: 700; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  -webkit-tap-highlight-color: transparent; background: var(--bg3); color: var(--text);
+}
+.hp-btn.minus { border-color: var(--border-red); color: var(--red); }
+.hp-btn.plus  { border-color: #1a4a2a; color: var(--green); }
+
+/* ── WEAPON AMMO ── */
+.weapon-row {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 8px 10px; margin-bottom: 5px;
+}
+.weapon-row-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; }
+.weapon-name { font-size: 13px; font-weight: 700; }
+.weapon-dmg { font-size: 11px; color: var(--red); font-weight: 700; }
+.ammo-row { display: flex; align-items: center; gap: 6px; }
+.ammo-label { font-size: 10px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.06em; flex: 1; }
+.ammo-val { font-size: 14px; font-weight: 900; min-width: 32px; text-align: center; }
+.ammo-btn {
+  width: 28px; height: 28px; border-radius: var(--radius);
+  border: 1px solid var(--border); background: var(--bg3); color: var(--text);
+  font-size: 16px; font-weight: 700; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+.ammo-btn:active { opacity: 0.7; }
+.ammo-empty { color: var(--red) !important; }
+
+/* ── TURN BANNER ── */
+.turn-banner {
+  background: var(--red); color: #fff;
+  border-radius: var(--radius); padding: 10px 14px;
+  font-weight: 900; font-size: 14px; text-align: center;
+  margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em;
+}
+.round-tag { float: right; font-size: 11px; opacity: 0.8; padding-top: 2px; }
+
+/* ── EMPTY STATE ── */
+.empty { text-align: center; padding: 30px 16px; color: var(--text-muted); font-size: 13px; }
+.empty-icon { font-size: 36px; margin-bottom: 8px; opacity: 0.5; }
+
+/* ── PERSO CARD ── */
+.perso-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-left: 3px solid var(--red);
+  border-radius: var(--radius-lg); padding: 12px; margin-bottom: 9px;
+}
+.perso-card-name { font-size: 16px; font-weight: 900; color: var(--text); text-transform: uppercase; }
+.perso-card-role { font-size: 11px; color: var(--red); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2px; }
+
+/* ── DICE ROLLER ── */
+.dice-btn {
+  background: var(--bg2); border: 2px solid var(--border);
+  border-radius: var(--radius); padding: 14px 8px;
+  font-size: 16px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em;
+  cursor: pointer; text-align: center; color: var(--text);
+  -webkit-tap-highlight-color: transparent; transition: border-color 0.1s, background 0.1s;
+}
+.dice-btn:active { border-color: var(--red); background: var(--red-dim); }
+.dice-result-box {
+  background: var(--bg2); border: 2px solid var(--red);
+  border-radius: var(--radius-lg); padding: 20px;
+  text-align: center; margin-bottom: 12px;
+}
+.dice-result-num { font-size: 64px; font-weight: 900; color: var(--red); line-height: 1; }
+.dice-result-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 6px; }
+
+/* ── ROLE GRID ── */
+.role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.role-card {
+  background: var(--bg2); border: 2px solid var(--border);
+  border-radius: var(--radius-lg); padding: 12px 10px;
+  cursor: pointer; text-align: center; -webkit-tap-highlight-color: transparent;
+  transition: border-color 0.15s;
+}
+.role-card.selected { border-color: var(--red); background: var(--red-dim); }
+.role-card-icon { font-size: 28px; margin-bottom: 5px; }
+.role-card-name { font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* ── WIZARD ── */
+.wiz-header { margin-bottom: 12px; }
+.wiz-funnel-tag { font-size: 11px; color: var(--red); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 3px; }
+.wiz-step-info { font-size: 12px; color: var(--text-muted); margin-bottom: 7px; }
+.wiz-step-name { color: var(--text); font-weight: 700; }
+.wiz-bar-track { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.wiz-bar-fill { height: 100%; background: var(--red); transition: width 0.4s; }
+
+.wiz-zone {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 18px 14px;
+  margin-bottom: 10px; text-align: center;
+}
+.wiz-title { font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text); margin-bottom: 6px; }
+.wiz-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+.wiz-result-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 14px;
+  margin-bottom: 10px;
+}
+.wiz-result-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); font-weight: 700; margin-bottom: 10px; }
+
+/* ── FACTION GRID ── */
+.faction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.faction-item {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 8px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.faction-name { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim); }
+.faction-val {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 3px 8px;
+  font-size: 16px; font-weight: 900; color: var(--text); text-align: center; min-width: 38px;
+}
+
+/* ── TOAST ── */
+#toast {
+  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+  background: var(--bg3); color: var(--text); padding: 10px 20px;
+  border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+  border: 1px solid var(--red);
+  opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 200;
+  white-space: nowrap;
+}
+#toast.show { opacity: 1; }
+
+/* ── DIVIDER ── */
+hr { border: none; border-top: 1px solid var(--border); margin: 10px 0; }
+
+/* ── SCROLLABLE ── */
+select { color: var(--text); }
+option { background: var(--bg3); }
+
+/* ── ANIMATIONS ── */
+@keyframes roll {
+  0% { transform: scale(0.8) rotate(-10deg); opacity: 0.5; }
+  60% { transform: scale(1.15) rotate(5deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.rolling { animation: roll 0.4s ease-out; }
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ══ PAGE : PERSOS ══ -->
+<div id="page-perso" class="page active">
+  <div class="page-header">
+    <div>
+      <h1>No Limit</h1>
+      <div class="sub">Aceryth — Compagnon</div>
+    </div>
+  </div>
+  <div id="perso-list-view">
+    <button class="btn btn-red" onclick="showWizard()">+ Nouveau personnage</button>
+    <div id="perso-list"></div>
+  </div>
+  <div id="perso-create-view" style="display:none"></div>
+  <div id="perso-sheet-view" style="display:none"></div>
+</div>
+
+<!-- ══ PAGE : COMBAT ══ -->
+<div id="page-combat" class="page">
+  <div class="page-header"><h1>Combat</h1></div>
+  <div class="card">
+    <span class="sec-label">Ajouter un combattant</span>
+    <div class="field">
+      <label>Nom</label>
+      <input type="text" id="comb-name" placeholder="Nom du combattant">
+    </div>
+    <div class="row-3">
+      <div class="field">
+        <label>Initiative</label>
+        <input type="number" id="comb-init" placeholder="0">
+      </div>
+      <div class="field">
+        <label>PdS max</label>
+        <input type="number" id="comb-pdv" placeholder="10">
+      </div>
+      <div class="field">
+        <label>Armure</label>
+        <input type="number" id="comb-armure" placeholder="0">
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-red" onclick="addCombatant()">Ajouter</button>
+      <button class="btn" onclick="rollAllInit()">🎲 Initiatives aléatoires</button>
+    </div>
+  </div>
+  <div id="turn-banner" style="display:none"></div>
+  <div id="comb-list"></div>
+  <div id="comb-controls" style="display:none">
+    <div class="btn-row">
+      <button class="btn btn-outline-red" onclick="nextTurn()">Tour suivant →</button>
+      <button class="btn btn-sm btn-danger" onclick="clearCombat()">Effacer tout</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PAGE : DÉS ══ -->
+<div id="page-des" class="page">
+  <div class="page-header"><h1>Dés</h1></div>
+  <div class="dice-result-box" id="dice-display">
+    <div class="dice-result-num" id="dice-num">—</div>
+    <div class="dice-result-label" id="dice-label">Lance un dé</div>
+  </div>
+  <div class="row-3" style="margin-bottom:10px">
+    <div class="dice-btn" onclick="rollDice(4)">d4</div>
+    <div class="dice-btn" onclick="rollDice(6)">d6</div>
+    <div class="dice-btn" onclick="rollDice(8)">d8</div>
+    <div class="dice-btn" onclick="rollDice(10)">d10</div>
+    <div class="dice-btn" onclick="rollDice(12)">d12</div>
+    <div class="dice-btn" onclick="rollDice(20)">d20</div>
+  </div>
+  <div class="card">
+    <span class="sec-label">Lancers multiples</span>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+      <div class="field" style="margin:0;flex:1">
+        <label>Nombre de dés</label>
+        <input type="number" id="multi-count" value="2" min="1" max="10">
+      </div>
+      <div class="field" style="margin:0;flex:1">
+        <label>Type de dé</label>
+        <select id="multi-type">
+          <option value="4">d4</option>
+          <option value="6" selected>d6</option>
+          <option value="8">d8</option>
+          <option value="10">d10</option>
+          <option value="12">d12</option>
+          <option value="20">d20</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-red" onclick="rollMulti()">🎲 Lancer</button>
+    <div id="multi-results" style="margin-top:8px;font-size:13px;color:var(--text-muted)"></div>
+  </div>
+  <div class="card" id="weapon-dice-card">
+    <span class="sec-label">Dés d'armes (combattants)</span>
+    <div id="weapon-dice-list">
+      <div class="empty" style="padding:16px">Aucun combattant actif.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PAGE : INFO ══ -->
+<div id="page-info" class="page">
+  <div class="page-header"><h1>Infos</h1></div>
+  <div class="card">
+    <span class="sec-label">Système de jeu</span>
+    <div style="font-size:13px;line-height:1.9;color:var(--text-dim)">
+      <b style="color:var(--text)">Attaque :</b> Lance 1d20 — dépasse le score du MJ pour toucher.<br>
+      <b style="color:var(--text)">Dégâts :</b> Lance le dé de l'arme après un succès.<br>
+      <b style="color:var(--text)">Stat :</b> Valeur de base + sous-stat pour un jet de compétence.<br>
+      <b style="color:var(--text)">Chance :</b> Ressource limitée, consultez le MJ.
+    </div>
+  </div>
+  <div class="card">
+    <span class="sec-label">8 Rôles</span>
+    <div style="font-size:12px;line-height:2;color:var(--text-dim)">
+      🔫 <b style="color:var(--text)">Porte-flingue</b> — Combat armé<br>
+      💻 <b style="color:var(--text)">Hacker</b> — Intrusion informatique<br>
+      🗡️ <b style="color:var(--text)">Maraudeur</b> — Survie & débrouillardise<br>
+      🔮 <b style="color:var(--text)">Adepte</b> — Arts mystiques<br>
+      ⚕️ <b style="color:var(--text)">Medtech</b> — Soins & cyberchirurgie<br>
+      🎭 <b style="color:var(--text)">Artiste</b> — Persuasion par le spectacle<br>
+      💰 <b style="color:var(--text)">Mercanti</b> — Commerce & influence<br>
+      📡 <b style="color:var(--text)">Média</b> — Information & propagande
+    </div>
+  </div>
+  <div class="card">
+    <span class="sec-label">Factions d'Aceryth</span>
+    <div style="font-size:12px;line-height:2;color:var(--text-dim)">
+      Corporatiste · Force de l'Ordre · Crime organisé · Intermédiaire · Politique · Culte · Street · Bas-fond · Nomade
+    </div>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<nav>
+  <button class="active" onclick="showPage('perso',this)">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+    Persos
+  </button>
+  <button onclick="showPage('combat',this)">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="3" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="21"/><line x1="3" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="21" y2="12"/></svg>
+    Combat
+  </button>
+  <button onclick="showPage('des',this)">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="8.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="8.5" cy="15.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></svg>
+    Dés
+  </button>
+  <button onclick="showPage('info',this)">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    Infos
+  </button>
+</nav>
+<div id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════
+
+const ROLES = [
+  { id:'porte-flingue', nom:'Porte-flingue', emoji:'🔫',
+    capacite:'[Capacité du Porte-flingue — à renseigner avec le MJ]' },
+  { id:'hacker', nom:'Hacker', emoji:'💻',
+    capacite:'[Capacité du Hacker — à renseigner avec le MJ]' },
+  { id:'maraudeur', nom:'Maraudeur', emoji:'🗡️',
+    capacite:'[Capacité du Maraudeur — à renseigner avec le MJ]' },
+  { id:'adepte', nom:'Adepte', emoji:'🔮',
+    capacite:'[Capacité de l\'Adepte — à renseigner avec le MJ]' },
+  { id:'medtech', nom:'Medtech', emoji:'⚕️',
+    capacite:'[Capacité du Medtech — à renseigner avec le MJ]' },
+  { id:'artiste', nom:'Artiste', emoji:'🎭',
+    capacite:'Charme naturel : vous arrivez à convaincre des fans (PNJ) à devenir des alliés (1D4, cercle d\'influence élevée). Inspiration Collective : par une performance (chant, discours, art visuel), tu galvanises tes alliés. 1D6 → sur 4+, tes alliés gagnent un bonus (+1D6) à leur prochain jet.' },
+  { id:'mercanti', nom:'Mercanti', emoji:'💰',
+    capacite:'[Capacité du Mercanti — à renseigner avec le MJ]' },
+  { id:'media', nom:'Média', emoji:'📡',
+    capacite:'[Capacité du Média — à renseigner avec le MJ]' },
+];
+
+const STATS_DEF = [
+  { key:'force', label:'Force', color:'#cc1111', subs:[
+    { key:'corps_a_corps', label:'Arme de corps à corps' },
+    { key:'bagarre',       label:'Bagarre' },
+    { key:'endurance',     label:'Endurance' },
+  ]},
+  { key:'reflexes', label:'Réflexes', color:'#cc1111', subs:[
+    { key:'arme_poing', label:'Arme de poing' },
+    { key:'tir',        label:'Tir' },
+    { key:'esquive',    label:'Esquive' },
+  ]},
+  { key:'mouvement', label:'Mouvement', color:'#cc1111', subs:[
+    { key:'rapidite',   label:'Rapidité' },
+    { key:'discretion', label:'Discrétion' },
+    { key:'souplesse',  label:'Souplesse' },
+  ]},
+  { key:'volonte', label:'Volonté', color:'#cc1111', subs:[
+    { key:'interrogatoire', label:'Interrogatoire' },
+    { key:'resistance',     label:'Résistance' },
+    { key:'tolerance',      label:'Tolérance' },
+  ]},
+  { key:'empathie', label:'Empathie', color:'#cc1111', subs:[
+    { key:'psychologie', label:'Psychologie' },
+    { key:'social',      label:'Social' },
+    { key:'perception',  label:'Perception' },
+  ]},
+  { key:'technique', label:'Technique', color:'#cc1111', subs:[
+    { key:'pyrotechnie', label:'Pyrotechnie' },
+    { key:'tech_sp1',    label:'Spécialité 1' },
+    { key:'tech_sp2',    label:'Spécialité 2' },
+  ]},
+  { key:'intelligence', label:'Intelligence', color:'#cc1111', subs:[
+    { key:'savoir',        label:'Savoir académique' },
+    { key:'astuces',       label:'Astuces' },
+    { key:'conversations', label:'Conversations' },
+    { key:'premiers_soins',label:'Premiers soins' },
+  ]},
+];
+
+const FACTIONS_DEF = [
+  { key:'f_corporatiste',  label:'Corporatiste' },
+  { key:'f_force_ordre',   label:'Force de l\'Ordre' },
+  { key:'f_crime',         label:'Crime organisé' },
+  { key:'f_intermediaire', label:'Intermédiaire' },
+  { key:'f_politique',     label:'Politique' },
+  { key:'f_culte',         label:'Culte' },
+  { key:'f_street',        label:'Street' },
+  { key:'f_bas_fond',      label:'Bas-fond' },
+  { key:'f_nomade',        label:'Nomade' },
+];
+
+const NOMS = ['Axel','Caine','Dax','Ferro','Ghost','Hera','Iko','Jade','Kira','Lax',
+  'Mira','Nox','Ora','Pax','Raze','Sable','Thorn','Uma','Vex','Wren',
+  'Xen','Yara','Zero','Zora','Brix','Cade','Drex','Elys','Fynn','Gael'];
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let persos = JSON.parse(localStorage.getItem('nl_persos') || '[]');
+let combatants = [];
+let currentTurn = 0;
+let round = 1;
+let wizardStep = 0;
+let wizardPerso = null;
+let lastDice = { num: 0, label: '' };
+
+// ══════════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════════
+function savePersos() { localStorage.setItem('nl_persos', JSON.stringify(persos)); }
+function sign(n) { return n > 0 ? '+' + n : '' + n; }
+function signColor(n) { return n > 0 ? 'var(--green)' : n < 0 ? 'var(--red)' : 'var(--text-muted)'; }
+
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (id === 'des') renderWeaponDiceList();
+}
+
+function emptyPerso() {
+  const p = {
+    id: Date.now() + Math.random(),
+    // Identité
+    nom:'', age:'', description:'',
+    // Rôle
+    role_id:'',
+    // Profil
+    evenement:'', motivations:'', qualites:'', defauts:'', liens_pos:'', liens_neg:'',
+    // Stats principales
+    force:0, reflexes:0, mouvement:0, volonte:0, empathie:0, technique:0, intelligence:0,
+    chance:0,
+    // Sous-stats
+    corps_a_corps:0, bagarre:0, endurance:0,
+    arme_poing:0, tir:0, esquive:0,
+    rapidite:0, discretion:0, souplesse:0,
+    interrogatoire:0, resistance:0, tolerance:0,
+    psychologie:0, social:0, perception:0,
+    pyrotechnie:0, tech_sp1:0, tech_sp2:0,
+    savoir:0, astuces:0, conversations:0, premiers_soins:0,
+    // Combat
+    niveau:1, pdv_max:10, pdv_cur:10, armure:0, risque_max:4, risque_cur:4, stress_max:5, stress_cur:0,
+    // Factions
+    f_corporatiste:0, f_force_ordre:0, f_crime:0, f_intermediaire:0,
+    f_politique:0, f_culte:0, f_street:0, f_bas_fond:0, f_nomade:0,
+    // Atouts
+    atout1_nom:'', atout1_desc:'',
+    atout2_nom:'', atout2_desc:'',
+    atout3_nom:'', atout3_desc:'',
+    // Équipement
+    armes:[], implants:'', credits:0, notes:''
+  };
+  return p;
+}
+
+function getRoleById(id) { return ROLES.find(r => r.id === id) || null; }
+
+// ══════════════════════════════════════════════
+// WIZARD — DÉFINITION DES ÉTAPES
+// ══════════════════════════════════════════════
+const WIZ_STEPS = [
+  { id:'role',     label:'Rôle' },
+  { id:'identite', label:'Identité' },
+  { id:'profil',   label:'Profil' },
+  { id:'stats',    label:'Stats' },
+  { id:'substats', label:'Sous-stats' },
+  { id:'combat',   label:'Valeurs de combat' },
+  { id:'factions', label:'Factions' },
+  { id:'atouts',   label:'Atouts' },
+  { id:'equip',    label:'Équipement' },
+  { id:'recap',    label:'Récapitulatif' },
+];
+const WIZ_TOTAL = WIZ_STEPS.length;
+
+// ══════════════════════════════════════════════
+// WIZARD — NAVIGATION
+// ══════════════════════════════════════════════
+function showWizard(editIdx) {
+  if (editIdx !== undefined) {
+    wizardPerso = { ...persos[editIdx] };
+    if (!wizardPerso.armes) wizardPerso.armes = [];
+  } else {
+    wizardPerso = emptyPerso();
+  }
+  wizardStep = 0;
+  document.getElementById('perso-list-view').style.display = 'none';
+  document.getElementById('perso-sheet-view').style.display = 'none';
+  const v = document.getElementById('perso-create-view');
+  v.style.display = 'block';
+  renderWizard();
+}
+
+function cancelCreate() {
+  document.getElementById('perso-create-view').style.display = 'none';
+  document.getElementById('perso-sheet-view').style.display = 'none';
+  document.getElementById('perso-list-view').style.display = 'block';
+  renderPersoList();
+}
+
+function wizardNext() {
+  syncWizardStep();
+  if (wizardStep < WIZ_TOTAL - 1) { wizardStep++; renderWizard(); }
+  else { saveWizardPerso(); }
+}
+function wizardBack() {
+  syncWizardStep();
+  if (wizardStep === 0) { cancelCreate(); return; }
+  wizardStep--; renderWizard();
+}
+
+function saveWizardPerso() {
+  syncWizardStep();
+  wizardPerso.pdv_cur = Math.min(wizardPerso.pdv_cur || wizardPerso.pdv_max, wizardPerso.pdv_max);
+  wizardPerso.risque_cur = Math.min(wizardPerso.risque_cur || wizardPerso.risque_max, wizardPerso.risque_max);
+  const idx = persos.findIndex(p => p.id === wizardPerso.id);
+  if (idx >= 0) persos[idx] = wizardPerso; else persos.push(wizardPerso);
+  savePersos();
+  toast('✔ ' + (wizardPerso.nom || 'Personnage') + ' sauvegardé');
+  cancelCreate();
+}
+
+// Sync les champs selon l'étape courante
+function syncWizardStep() {
+  const step = WIZ_STEPS[wizardStep];
+  const g = id => document.getElementById(id);
+  const gv = id => { const el = g(id); return el ? el.value : ''; };
+  const gi = id => { const el = g(id); return el ? (parseInt(el.value) || 0) : 0; };
+
+  switch(step.id) {
+    case 'identite':
+      wizardPerso.nom         = gv('w-nom');
+      wizardPerso.age         = gv('w-age');
+      wizardPerso.description = gv('w-desc');
+      break;
+    case 'profil':
+      wizardPerso.evenement   = gv('w-event');
+      wizardPerso.motivations = gv('w-motiv');
+      wizardPerso.qualites    = gv('w-qual');
+      wizardPerso.defauts     = gv('w-def');
+      wizardPerso.liens_pos   = gv('w-lpos');
+      wizardPerso.liens_neg   = gv('w-lneg');
+      break;
+    case 'stats':
+      ['force','reflexes','mouvement','volonte','empathie','technique','intelligence','chance'].forEach(k => {
+        wizardPerso[k] = gi('w-' + k);
+      });
+      break;
+    case 'substats':
+      STATS_DEF.forEach(s => s.subs.forEach(sub => { wizardPerso[sub.key] = gi('w-sub-' + sub.key); }));
+      break;
+    case 'combat':
+      wizardPerso.niveau     = gi('w-niveau');
+      wizardPerso.pdv_max    = gi('w-pdv-max');
+      wizardPerso.pdv_cur    = gi('w-pdv-max');
+      wizardPerso.armure     = gi('w-armure');
+      wizardPerso.risque_max = gi('w-risque');
+      wizardPerso.risque_cur = gi('w-risque');
+      wizardPerso.stress_max = gi('w-stress');
+      wizardPerso.stress_cur = 0;
+      break;
+    case 'factions':
+      FACTIONS_DEF.forEach(f => { wizardPerso[f.key] = gi('w-' + f.key); });
+      break;
+    case 'atouts':
+      wizardPerso.atout1_nom  = gv('w-a1-nom');  wizardPerso.atout1_desc = gv('w-a1-desc');
+      wizardPerso.atout2_nom  = gv('w-a2-nom');  wizardPerso.atout2_desc = gv('w-a2-desc');
+      wizardPerso.atout3_nom  = gv('w-a3-nom');  wizardPerso.atout3_desc = gv('w-a3-desc');
+      break;
+    case 'equip':
+      wizardPerso.implants = gv('w-implants');
+      wizardPerso.credits  = gi('w-credits');
+      wizardPerso.notes    = gv('w-notes');
+      break;
+  }
+}
+
+// ══════════════════════════════════════════════
+// WIZARD — RENDER
+// ══════════════════════════════════════════════
+function renderWizard() {
+  const step = WIZ_STEPS[wizardStep];
+  const pct  = Math.round((wizardStep / (WIZ_TOTAL - 1)) * 100);
+  const isLast = wizardStep === WIZ_TOTAL - 1;
+  const backLabel = wizardStep === 0 ? 'Annuler' : '← Retour';
+  const nextLabel = isLast ? 'Terminer ✔' : 'Suivant →';
+
+  const header = `
+    <div class="wiz-header">
+      <div class="wiz-step-info">Étape ${wizardStep+1}/${WIZ_TOTAL} · <span class="wiz-step-name">${step.label}</span></div>
+      <div class="wiz-bar-track"><div class="wiz-bar-fill" style="width:${pct}%"></div></div>
+    </div>`;
+
+  let body = '';
+  switch(step.id) {
+    case 'role':     body = renderStepRole();     break;
+    case 'identite': body = renderStepIdentite(); break;
+    case 'profil':   body = renderStepProfil();   break;
+    case 'stats':    body = renderStepStats();     break;
+    case 'substats': body = renderStepSubstats();  break;
+    case 'combat':   body = renderStepCombat();   break;
+    case 'factions': body = renderStepFactions();  break;
+    case 'atouts':   body = renderStepAtouts();   break;
+    case 'equip':    body = renderStepEquip();    break;
+    case 'recap':    body = renderStepRecap();    break;
+  }
+
+  const nav = `
+    <div class="btn-row" style="margin-top:6px">
+      <button class="btn" onclick="wizardBack()">${backLabel}</button>
+      <button class="btn btn-red" onclick="wizardNext()">${nextLabel}</button>
+    </div>`;
+
+  document.getElementById('perso-create-view').innerHTML = header + body + nav;
+  window.scrollTo(0, 0);
+}
+
+// Étape : Rôle
+function renderStepRole() {
+  return `
+    <div class="wiz-zone" style="padding:12px 10px;text-align:left">
+      <div class="wiz-title" style="font-size:16px;margin-bottom:4px">Choisis ton rôle</div>
+      <div class="wiz-desc">Chaque rôle définit ta capacité spéciale et ton approche du monde d'Aceryth.</div>
+    </div>
+    <div class="role-grid">
+      ${ROLES.map(r => `
+        <div class="role-card${wizardPerso.role_id===r.id?' selected':''}" onclick="selectRole('${r.id}')">
+          <div class="role-card-icon">${r.emoji}</div>
+          <div class="role-card-name">${r.nom}</div>
+        </div>`).join('')}
+    </div>
+    ${wizardPerso.role_id ? `
+      <div class="card card-red">
+        <span class="sec-label">Capacité de rôle — ${getRoleById(wizardPerso.role_id)?.emoji} ${getRoleById(wizardPerso.role_id)?.nom}</span>
+        <div style="font-size:13px;color:var(--text-dim);line-height:1.6">${getRoleById(wizardPerso.role_id)?.capacite || ''}</div>
+      </div>` : ''}`;
+}
+function selectRole(id) { wizardPerso.role_id = id; renderWizard(); }
+
+// Étape : Identité
+function renderStepIdentite() {
+  return `
+    <div class="wiz-result-card">
+      <span class="sec-label">Identité</span>
+      <div class="field">
+        <label>Prénom / Surnom</label>
+        <div style="display:flex;gap:7px">
+          <input type="text" id="w-nom" value="${wizardPerso.nom}" placeholder="Nom du personnage" style="flex:1">
+          <button class="btn btn-sm btn-outline-red" onclick="randomNom()" style="flex-shrink:0">🎲</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Âge</label>
+        <input type="text" id="w-age" value="${wizardPerso.age}" placeholder="Ex: 28 ans">
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label>Description</label>
+        <textarea id="w-desc" rows="4" style="resize:vertical"
+          placeholder="Origine, apparence, historique...">${wizardPerso.description}</textarea>
+      </div>
+    </div>`;
+}
+function randomNom() {
+  const n = NOMS[Math.floor(Math.random() * NOMS.length)];
+  const el = document.getElementById('w-nom');
+  if (el) { el.value = n; wizardPerso.nom = n; }
+}
+
+// Étape : Profil
+function renderStepProfil() {
+  const fields = [
+    ['w-event', 'Événement marquant', wizardPerso.evenement, 'Ex: Trahison par un allié de confiance'],
+    ['w-motiv', 'Motivations', wizardPerso.motivations, 'Ex: Ambition politique'],
+    ['w-qual',  'Qualités', wizardPerso.qualites, 'Ex: Leader / Mystérieuse'],
+    ['w-def',   'Défauts', wizardPerso.defauts, 'Ex: Fanatique / Lunatique'],
+    ['w-lpos',  'Liens Positifs', wizardPerso.liens_pos, 'Ex: Service rendu'],
+    ['w-lneg',  'Liens Négatifs', wizardPerso.liens_neg, 'Ex: Un(e) ami(e) d\'enfance'],
+  ];
+  return `
+    <div class="wiz-result-card">
+      <span class="sec-label">Profil psychologique</span>
+      ${fields.map(([id, lbl, val, ph]) => `
+        <div class="field">
+          <label>${lbl}</label>
+          <input type="text" id="${id}" value="${val || ''}" placeholder="${ph}">
+        </div>`).join('')}
+    </div>`;
+}
+
+// Étape : Stats principales
+function renderStepStats() {
+  const allKeys = ['force','reflexes','mouvement','volonte','empathie','technique','intelligence'];
+  return `
+    <div class="wiz-result-card">
+      <span class="sec-label">Stats principales</span>
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px">Valeurs attribuées par le MJ. Plage typique : −5 à +5.</div>
+      ${allKeys.map(k => {
+        const sdef = STATS_DEF.find(s => s.key === k);
+        const val = wizardPerso[k] || 0;
+        return `<div class="stat-row">
+          <div class="stat-name">${sdef.label}</div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <button class="num-btn" onclick="adjustStat('${k}',-1)" style="width:32px;height:32px;font-size:18px">−</button>
+            <input type="number" id="w-${k}" value="${val}" style="width:52px;text-align:center;font-size:18px;font-weight:900;padding:6px 4px" oninput="wizardPerso['${k}']=parseInt(this.value)||0">
+            <button class="num-btn" onclick="adjustStat('${k}',1)" style="width:32px;height:32px;font-size:18px">+</button>
+          </div>
+        </div>`;
+      }).join('')}
+      <div class="stat-row" style="border-top:1px solid var(--border-red);margin-top:4px;padding-top:12px">
+        <div class="stat-name" style="color:var(--gold)">Chance</div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <button class="num-btn" onclick="adjustStat('chance',-1)" style="width:32px;height:32px;font-size:18px">−</button>
+          <input type="number" id="w-chance" value="${wizardPerso.chance||0}" style="width:52px;text-align:center;font-size:18px;font-weight:900;padding:6px 4px" oninput="wizardPerso.chance=parseInt(this.value)||0">
+          <button class="num-btn" onclick="adjustStat('chance',1)" style="width:32px;height:32px;font-size:18px">+</button>
+        </div>
+      </div>
+    </div>`;
+}
+function adjustStat(key, delta) {
+  wizardPerso[key] = (wizardPerso[key] || 0) + delta;
+  const el = document.getElementById('w-' + key);
+  if (el) el.value = wizardPerso[key];
+}
+
+// Étape : Sous-stats
+function renderStepSubstats() {
+  return `
+    <div class="wiz-result-card">
+      <span class="sec-label">Sous-statistiques</span>
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px">Bonus ajouté à la stat parente pour les jets spécialisés.</div>
+      ${STATS_DEF.map(s => `
+        <div class="main-stat-block">
+          <span class="name">${s.label}</span>
+          <span class="val" style="font-size:14px">${sign(wizardPerso[s.key]||0)}</span>
+        </div>
+        ${s.subs.map(sub => {
+          const v = wizardPerso[sub.key] || 0;
+          return `<div class="stat-row" style="padding-left:10px">
+            <div>
+              <div style="font-size:12px">${sub.label}</div>
+              <div style="font-size:10px;color:var(--text-muted)">Total : ${sign((wizardPerso[s.key]||0)+(v))}</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:5px">
+              <button class="num-btn" onclick="adjustSub('${sub.key}',-1)" style="width:28px;height:28px;font-size:16px">−</button>
+              <input type="number" id="w-sub-${sub.key}" value="${v}" style="width:44px;text-align:center;font-size:15px;font-weight:700;padding:5px 3px" oninput="wizardPerso['${sub.key}']=parseInt(this.value)||0">
+              <button class="num-btn" onclick="adjustSub('${sub.key}',1)" style="width:28px;height:28px;font-size:16px">+</button>
+            </div>
+          </div>`;
+        }).join('')}
+        <div style="margin-bottom:8px"></div>`).join('')}
+    </div>`;
+}
+function adjustSub(key, delta) {
+  wizardPerso[key] = (wizardPerso[key] || 0) + delta;
+  const el = document.getElementById('w-sub-' + key);
+  if (el) el.value = wizardPerso[key];
+  // refresh totals
+  STATS_DEF.forEach(s => s.subs.forEach(sub => {
+    if (sub.key === key) {
+      const el2 = document.getElementById('w-sub-' + key)?.closest('.stat-row')?.querySelector('div > div:last-child');
+    }
+  }));
+  // simple: just update the total label
+  const row = document.getElementById('w-sub-' + key)?.closest('.stat-row');
+  if (row) {
+    const parentKey = STATS_DEF.find(s => s.subs.some(sub => sub.key === key))?.key || '';
+    const lbl = row.querySelector('div > div:last-child');
+    if (lbl) lbl.textContent = 'Total : ' + sign((wizardPerso[parentKey]||0) + (wizardPerso[key]||0));
+  }
+}
+
+// Étape : Valeurs de combat
+function renderStepCombat() {
+  return `
+    <div class="wiz-result-card">
+      <span class="sec-label">Valeurs de combat</span>
+      <div class="row-2">
+        <div class="field">
+          <label>Niveau</label>
+          <input type="number" id="w-niveau" value="${wizardPerso.niveau||1}" min="1" max="20">
+        </div>
+        <div class="field">
+          <label>Armure</label>
+          <input type="number" id="w-armure" value="${wizardPerso.armure||0}" min="0">
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="field">
+          <label>Points de Santé (max)</label>
+          <input type="number" id="w-pdv-max" value="${wizardPerso.pdv_max||10}" min="1">
+        </div>
+        <div class="field">
+          <label>Points de Risque (max)</label>
+          <input type="number" id="w-risque" value="${wizardPerso.risque_max||4}" min="0">
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label>Points de Stress (max)</label>
+        <input type="number" id="w-stress" value="${wizardPerso.stress_max||5}" min="0">
+      </div>
+    </div>`;
+}
+
+// Étape : Factions
+function renderStepFactions() {
+  return `
+    <div class="wiz-result-card">
+      <span class="sec-label">Réputations — Factions</span>
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px">Score de réputation auprès de chaque faction (0 = neutre).</div>
+      <div class="faction-grid">
+        ${FACTIONS_DEF.map(f => `
+          <div class="faction-item">
+            <div class="faction-name">${f.label}</div>
+            <input type="number" id="w-${f.key}" class="faction-val" value="${wizardPerso[f.key]||0}"
+                   style="width:52px;text-align:center;padding:4px;font-size:15px;font-weight:900">
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+// Étape : Atouts
+function renderStepAtouts() {
+  return `
+    <div class="wiz-result-card">
+      <span class="sec-label">Atouts</span>
+      ${[1,2,3].map(n => `
+        <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border)">
+          <div style="font-size:11px;color:var(--red);text-transform:uppercase;font-weight:700;margin-bottom:6px">Atout ${n}</div>
+          <div class="field">
+            <label>Nom</label>
+            <input type="text" id="w-a${n}-nom" value="${wizardPerso['atout'+n+'_nom']||''}" placeholder="Nom de l'atout">
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label>Description</label>
+            <textarea id="w-a${n}-desc" rows="2" style="resize:vertical" placeholder="Effet...">${wizardPerso['atout'+n+'_desc']||''}</textarea>
+          </div>
+        </div>`).join('')}
+    </div>`;
+}
+
+// Étape : Équipement
+function renderStepEquip() {
+  const armes = wizardPerso.armes || [];
+  return `
+    <div class="wiz-result-card">
+      <span class="sec-label">Armes</span>
+      <div id="wiz-armes-list">
+        ${armes.map((a,i) => renderWizArme(a, i)).join('')}
+      </div>
+      <button class="btn btn-outline-red btn-sm" onclick="addWizArme()" style="margin-top:4px">+ Ajouter une arme</button>
+    </div>
+    <div class="wiz-result-card">
+      <span class="sec-label">Implants</span>
+      <textarea id="w-implants" rows="3" style="resize:vertical" placeholder="Liste des implants cybernétiques...">${wizardPerso.implants||''}</textarea>
+    </div>
+    <div class="wiz-result-card">
+      <div class="row-2">
+        <div class="field" style="margin-bottom:0">
+          <label>Crédits</label>
+          <input type="number" id="w-credits" value="${wizardPerso.credits||0}" min="0">
+        </div>
+      </div>
+    </div>
+    <div class="wiz-result-card" style="margin-bottom:0">
+      <span class="sec-label">Notes</span>
+      <textarea id="w-notes" rows="3" style="resize:vertical" placeholder="Notes libres...">${wizardPerso.notes||''}</textarea>
+    </div>`;
+}
+
+function renderWizArme(a, i) {
+  return `
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:10px;margin-bottom:7px">
+      <div style="display:flex;gap:6px;margin-bottom:6px">
+        <input type="text" value="${a.nom||''}" placeholder="Nom de l'arme" style="flex:2"
+               oninput="wizardPerso.armes[${i}].nom=this.value">
+        <input type="text" value="${a.degats||''}" placeholder="Dégâts (ex: 1d6)" style="flex:1"
+               oninput="wizardPerso.armes[${i}].degats=this.value">
+      </div>
+      <div style="display:flex;gap:6px;margin-bottom:4px">
+        <div style="flex:1">
+          <label style="font-size:10px">Att/round</label>
+          <input type="number" value="${a.att_round||1}" min="1"
+                 oninput="wizardPerso.armes[${i}].att_round=parseInt(this.value)||1">
+        </div>
+        <div style="flex:1">
+          <label style="font-size:10px">Munitions max</label>
+          <input type="number" value="${a.ammo_max||0}" min="0"
+                 oninput="wizardPerso.armes[${i}].ammo_max=parseInt(this.value)||0;wizardPerso.armes[${i}].ammo_cur=parseInt(this.value)||0">
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <input type="text" value="${a.notes||''}" placeholder="Notes (ex: Brûlure D4)" style="flex:1;font-size:12px"
+               oninput="wizardPerso.armes[${i}].notes=this.value">
+        <button class="btn btn-sm btn-danger" onclick="removeWizArme(${i})" style="flex-shrink:0;padding:6px 10px">✕</button>
+      </div>
+    </div>`;
+}
+
+function addWizArme() {
+  syncWizardStep();
+  if (!wizardPerso.armes) wizardPerso.armes = [];
+  wizardPerso.armes.push({ nom:'', degats:'', att_round:1, notes:'', ammo_cur:0, ammo_max:0 });
+  // Re-render just the armes list
+  const el = document.getElementById('wiz-armes-list');
+  if (el) el.innerHTML = wizardPerso.armes.map((a,i) => renderWizArme(a,i)).join('');
+}
+function removeWizArme(i) {
+  wizardPerso.armes.splice(i, 1);
+  const el = document.getElementById('wiz-armes-list');
+  if (el) el.innerHTML = wizardPerso.armes.map((a,i) => renderWizArme(a,i)).join('');
+}
+
+// Étape : Récap
+function renderStepRecap() {
+  const p = wizardPerso;
+  const role = getRoleById(p.role_id);
+  const statCols = STATS_DEF.map(s => {
+    const v = p[s.key] || 0;
+    const col = signColor(v);
+    return `<div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:7px;text-align:center">
+      <div style="font-size:9px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted)">${s.label}</div>
+      <div style="font-size:18px;font-weight:900;color:${col}">${sign(v)}</div>
+    </div>`;
+  }).join('');
+
+  return `
+    <div class="wiz-zone" style="padding:14px;text-align:left">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <div style="font-size:30px">${role?.emoji||'?'}</div>
+        <div>
+          <div style="font-size:20px;font-weight:900;text-transform:uppercase">${p.nom||'Inconnu'}</div>
+          <div style="font-size:12px;color:var(--red);text-transform:uppercase;letter-spacing:0.1em">${role?.nom||'Rôle non défini'} · Niv.${p.niveau||1}</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <span class="sec-label">Stats</span>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:8px">${statCols}</div>
+      <div style="display:flex;gap:8px">
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:7px;text-align:center;flex:1">
+          <div style="font-size:9px;text-transform:uppercase;color:var(--text-muted)">Chance</div>
+          <div style="font-size:18px;font-weight:900;color:var(--gold)">${p.chance||0}</div>
+        </div>
+        <div style="background:var(--red-dim);border:1px solid var(--border-red);border-radius:var(--radius);padding:7px;text-align:center;flex:1">
+          <div style="font-size:9px;text-transform:uppercase;color:var(--text-muted)">PdS</div>
+          <div style="font-size:18px;font-weight:900;color:var(--red)">${p.pdv_max||0}</div>
+        </div>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:7px;text-align:center;flex:1">
+          <div style="font-size:9px;text-transform:uppercase;color:var(--text-muted)">Armure</div>
+          <div style="font-size:18px;font-weight:900">${p.armure||0}</div>
+        </div>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:7px;text-align:center;flex:1">
+          <div style="font-size:9px;text-transform:uppercase;color:var(--text-muted)">Risque</div>
+          <div style="font-size:18px;font-weight:900">${p.risque_max||0}</div>
+        </div>
+      </div>
+    </div>
+    ${p.armes && p.armes.length ? `<div class="card">
+      <span class="sec-label">Armes (${p.armes.length})</span>
+      ${p.armes.map(a => `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)">
+        <span style="font-size:13px;font-weight:700">${a.nom||'—'}</span>
+        <span style="font-size:12px;color:var(--red)">${a.degats||'—'} · ${a.ammo_max||0} bal.</span>
+      </div>`).join('')}
+    </div>` : ''}`;
+}
+
+// ══════════════════════════════════════════════
+// LISTE DES PERSOS
+// ══════════════════════════════════════════════
+function renderPersoList() {
+  const el = document.getElementById('perso-list');
+  if (!persos.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-icon">🔫</div>Aucun personnage.<br>Crée ton premier opérateur.</div>`;
+    return;
+  }
+  el.innerHTML = persos.map((p, i) => {
+    const role = getRoleById(p.role_id);
+    const hpPct = p.pdv_max ? Math.round((p.pdv_cur || p.pdv_max) / p.pdv_max * 100) : 100;
+    const hpCol = hpPct > 50 ? 'var(--green)' : hpPct > 25 ? '#d4860a' : 'var(--red)';
+    return `<div class="perso-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:22px">${role?.emoji||'?'}</span>
+            <div>
+              <div class="perso-card-name">${p.nom||'Inconnu'}</div>
+              <div class="perso-card-role">${role?.nom||'—'} · Niv.${p.niveau||1}</div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:4px">
+          <button class="btn btn-sm" onclick="showWizard(${i})">✏</button>
+          <button class="btn btn-sm btn-danger" onclick="deletePerso(${i})">✕</button>
+        </div>
+      </div>
+      <div style="margin-top:9px;display:flex;align-items:center;gap:8px">
+        <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted)">PdS</span>
+        <div class="hp-bar" style="flex:1"><div class="hp-fill" style="width:${hpPct}%;background:${hpCol}"></div></div>
+        <span style="font-size:12px;font-weight:700;color:${hpCol}">${p.pdv_cur||p.pdv_max||0}/${p.pdv_max||0}</span>
+      </div>
+      <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn btn-sm btn-red" onclick="showSheet(${i})">Fiche complète</button>
+        <button class="btn btn-sm" onclick="addPersoToCombat(${i})">→ Combat</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function deletePerso(i) {
+  if (confirm('Supprimer ' + (persos[i].nom || 'ce personnage') + ' ?')) {
+    persos.splice(i, 1); savePersos(); renderPersoList();
+    toast('Personnage supprimé.');
+  }
+}
+
+// ══════════════════════════════════════════════
+// FICHE COMPLÈTE
+// ══════════════════════════════════════════════
+function showSheet(i) {
+  const p = persos[i];
+  const role = getRoleById(p.role_id);
+  const hpPct = p.pdv_max ? Math.round((p.pdv_cur||p.pdv_max)/p.pdv_max*100) : 100;
+  const hpCol = hpPct > 50 ? 'var(--green)' : hpPct > 25 ? '#d4860a' : 'var(--red)';
+  const risPct = p.risque_max ? Math.round((p.risque_cur||p.risque_max)/p.risque_max*100) : 100;
+
+  document.getElementById('perso-list-view').style.display = 'none';
+  const sv = document.getElementById('perso-sheet-view');
+  sv.style.display = 'block';
+
+  // Stats grid
+  const statsHtml = STATS_DEF.map(s => {
+    const v = p[s.key] || 0;
+    const col = signColor(v);
+    return `<div>
+      <div class="main-stat-block">
+        <span class="name">${s.label}</span>
+        <span class="val">${sign(v)}</span>
+      </div>
+      ${s.subs.map(sub => {
+        const sv2 = p[sub.key] || 0;
+        const total = v + sv2;
+        return `<div style="display:flex;justify-content:space-between;padding:5px 10px 5px 20px;border-bottom:1px solid var(--border)">
+          <span style="font-size:12px;color:var(--text-dim)">${sub.label}</span>
+          <span style="font-size:12px;font-weight:700;color:${signColor(total)}">${sv2 ? sign(sv2) : '—'} <span style="font-size:10px;color:var(--text-muted)">(${sign(total)})</span></span>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }).join('');
+
+  // Factions
+  const factHtml = FACTIONS_DEF.filter(f => p[f.key]).map(f =>
+    `<span style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:4px 10px;font-size:12px;display:inline-flex;align-items:center;gap:5px">
+      <span style="color:var(--text-muted);font-size:10px;text-transform:uppercase">${f.label}</span>
+      <span style="font-weight:900;color:var(--red)">${p[f.key]}</span>
+    </span>`
+  ).join('');
+
+  // Atouts
+  const atotsHtml = [1,2,3].filter(n => p['atout'+n+'_nom']).map(n =>
+    `<div style="padding:8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px">
+      <div style="font-size:12px;font-weight:700;color:var(--red);text-transform:uppercase;margin-bottom:3px">${p['atout'+n+'_nom']}</div>
+      <div style="font-size:12px;color:var(--text-dim)">${p['atout'+n+'_desc']||''}</div>
+    </div>`
+  ).join('');
+
+  sv.innerHTML = `
+    <button class="btn" onclick="cancelCreate()" style="margin-bottom:10px">← Retour</button>
+
+    <!-- Identité + Rôle -->
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <div style="font-size:40px">${role?.emoji||'?'}</div>
+        <div>
+          <div style="font-size:22px;font-weight:900;text-transform:uppercase">${p.nom||'Inconnu'}</div>
+          <div style="font-size:12px;color:var(--red);text-transform:uppercase;letter-spacing:0.1em">${role?.nom||'—'} · Niv.${p.niveau||1}</div>
+          ${p.age ? `<div style="font-size:12px;color:var(--text-muted)">${p.age}</div>` : ''}
+        </div>
+      </div>
+      ${p.description ? `<div style="font-size:13px;color:var(--text-dim);line-height:1.6;margin-bottom:10px;padding-top:8px;border-top:1px solid var(--border)">${p.description}</div>` : ''}
+      ${role ? `<div style="background:var(--red-dim);border:1px solid var(--border-red);border-radius:var(--radius);padding:9px">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--red);font-weight:700;margin-bottom:4px">Capacité de rôle</div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.5">${role.capacite}</div>
+      </div>` : ''}
+    </div>
+
+    <!-- PdS + Risque -->
+    <div class="card">
+      <span class="sec-label">Points de vie & Ressources</span>
+      <div style="margin-bottom:8px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+          <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted)">Points de Santé</span>
+          <span style="font-size:14px;font-weight:900;color:${hpCol}">${p.pdv_cur||p.pdv_max||0} / ${p.pdv_max||0}</span>
+        </div>
+        <div class="hp-bar" style="height:8px"><div class="hp-fill" style="width:${hpPct}%;background:${hpCol}"></div></div>
+        <div style="display:flex;gap:6px;margin-top:7px">
+          <button class="hp-btn minus" onclick="changeSheetHP(${i},-1)">−</button>
+          <button class="hp-btn plus"  onclick="changeSheetHP(${i},+1)">+</button>
+          <button class="btn btn-sm"   onclick="promptSheetVal(${i},'pdv','PdS')">Valeur exacte</button>
+        </div>
+      </div>
+      <div style="margin-bottom:8px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+          <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted)">Points de Risque</span>
+          <span style="font-size:14px;font-weight:900">${p.risque_cur||p.risque_max||0} / ${p.risque_max||0}</span>
+        </div>
+        <div class="hp-bar"><div class="hp-fill" style="width:${risPct}%;background:#d4860a"></div></div>
+        <div style="display:flex;gap:6px;margin-top:7px">
+          <button class="hp-btn minus" onclick="changeSheetRisque(${i},-1)">−</button>
+          <button class="hp-btn plus"  onclick="changeSheetRisque(${i},+1)">+</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:7px;text-align:center;flex:1">
+          <div style="font-size:10px;text-transform:uppercase;color:var(--text-muted)">Armure</div>
+          <div style="font-size:18px;font-weight:900">${p.armure||0}</div>
+        </div>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:7px;text-align:center;flex:1">
+          <div style="font-size:10px;text-transform:uppercase;color:var(--text-muted)">Stress</div>
+          <div style="font-size:18px;font-weight:900">${p.stress_cur||0}/${p.stress_max||0}</div>
+        </div>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:7px;text-align:center;flex:1">
+          <div style="font-size:10px;text-transform:uppercase;color:var(--gold)">Chance</div>
+          <div style="font-size:18px;font-weight:900;color:var(--gold)">${p.chance||0}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="card">
+      <span class="sec-label">Statistiques</span>
+      ${statsHtml}
+    </div>
+
+    <!-- Profil -->
+    ${(p.evenement||p.motivations||p.qualites||p.defauts) ? `<div class="card">
+      <span class="sec-label">Profil</span>
+      ${p.evenement   ? `<div style="margin-bottom:7px"><div style="font-size:10px;text-transform:uppercase;color:var(--text-muted)">Événement marquant</div><div style="font-size:13px;margin-top:2px">${p.evenement}</div></div>` : ''}
+      ${p.motivations ? `<div style="margin-bottom:7px"><div style="font-size:10px;text-transform:uppercase;color:var(--text-muted)">Motivations</div><div style="font-size:13px;margin-top:2px">${p.motivations}</div></div>` : ''}
+      ${p.qualites    ? `<div style="margin-bottom:7px"><div style="font-size:10px;text-transform:uppercase;color:var(--text-muted)">Qualités</div><div style="font-size:13px;margin-top:2px">${p.qualites}</div></div>` : ''}
+      ${p.defauts     ? `<div style="margin-bottom:7px"><div style="font-size:10px;text-transform:uppercase;color:var(--text-muted)">Défauts</div><div style="font-size:13px;margin-top:2px">${p.defauts}</div></div>` : ''}
+      ${p.liens_pos   ? `<div style="margin-bottom:7px"><div style="font-size:10px;text-transform:uppercase;color:var(--text-muted)">Liens Positifs</div><div style="font-size:13px;margin-top:2px">${p.liens_pos}</div></div>` : ''}
+      ${p.liens_neg   ? `<div><div style="font-size:10px;text-transform:uppercase;color:var(--text-muted)">Liens Négatifs</div><div style="font-size:13px;margin-top:2px">${p.liens_neg}</div></div>` : ''}
+    </div>` : ''}
+
+    <!-- Factions -->
+    ${factHtml ? `<div class="card">
+      <span class="sec-label">Factions</span>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">${factHtml}</div>
+    </div>` : ''}
+
+    <!-- Atouts -->
+    ${atotsHtml ? `<div class="card"><span class="sec-label">Atouts</span>${atotsHtml}</div>` : ''}
+
+    <!-- Équipement -->
+    <div class="card">
+      <span class="sec-label">Armes</span>
+      ${p.armes && p.armes.length ? p.armes.map((a,ai) => `
+        <div class="weapon-row">
+          <div class="weapon-row-top">
+            <span class="weapon-name">${a.nom||'—'}</span>
+            <span class="weapon-dmg">${a.degats||'—'}</span>
+          </div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:5px">
+            ${a.att_round||1} att/round${a.notes?' · '+a.notes:''}
+          </div>
+          <div class="ammo-row">
+            <span class="ammo-label">🔴 Munitions</span>
+            <button class="ammo-btn" onclick="changePersoAmmo(${i},${ai},-1)">−</button>
+            <span class="ammo-val${!a.ammo_max?' ammo-empty':''}">${a.ammo_cur||0}/${a.ammo_max||0}</span>
+            <button class="ammo-btn" onclick="changePersoAmmo(${i},${ai},1)">+</button>
+            <button class="btn btn-sm" onclick="reloadPersoAmmo(${i},${ai})" style="font-size:11px;padding:5px 8px">Recharger</button>
+          </div>
+        </div>`).join('') : '<div style="font-size:13px;color:var(--text-muted)">Aucune arme enregistrée.</div>'}
+      ${p.implants ? `<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
+        <div style="font-size:10px;text-transform:uppercase;color:var(--text-muted);margin-bottom:3px">Implants</div>
+        <div style="font-size:13px;white-space:pre-wrap">${p.implants}</div>
+      </div>` : ''}
+      <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);font-size:13px">
+        💰 <b>${p.credits||0}</b> crédits
+      </div>
+    </div>
+
+    ${p.notes ? `<div class="card"><span class="sec-label">Notes</span><div style="font-size:13px;white-space:pre-wrap;color:var(--text-dim)">${p.notes}</div></div>` : ''}
+
+    <div class="btn-row">
+      <button class="btn btn-red" onclick="addPersoToCombat(${i});showPage('combat',document.querySelector('nav button:nth-child(2)'))">→ Combat</button>
+      <button class="btn" onclick="showWizard(${i})">Éditer</button>
+    </div>`;
+}
+
+function changeSheetHP(i, d) {
+  persos[i].pdv_cur = Math.max(0, Math.min(persos[i].pdv_max, (persos[i].pdv_cur||persos[i].pdv_max)+d));
+  savePersos(); showSheet(i);
+}
+function changeSheetRisque(i, d) {
+  persos[i].risque_cur = Math.max(0, Math.min(persos[i].risque_max, (persos[i].risque_cur||persos[i].risque_max)+d));
+  savePersos(); showSheet(i);
+}
+function promptSheetVal(i, key, label) {
+  const v = prompt('Nouveau ' + label + ' pour ' + (persos[i].nom||'ce perso') + ' :');
+  if (v !== null) {
+    const n = parseInt(v);
+    if (!isNaN(n)) {
+      const maxKey = key === 'pdv' ? 'pdv_max' : 'risque_max';
+      persos[i][key+'_cur'] = Math.max(0, Math.min(persos[i][maxKey], n));
+      savePersos(); showSheet(i);
+    }
+  }
+}
+function changePersoAmmo(pi, ai, d) {
+  const a = persos[pi].armes[ai];
+  a.ammo_cur = Math.max(0, Math.min(a.ammo_max, (a.ammo_cur||0)+d));
+  savePersos(); showSheet(pi);
+}
+function reloadPersoAmmo(pi, ai) {
+  persos[pi].armes[ai].ammo_cur = persos[pi].armes[ai].ammo_max;
+  savePersos(); showSheet(pi);
+}
+
+// ══════════════════════════════════════════════
+// COMBAT
+// ══════════════════════════════════════════════
+function addCombatant() {
+  const name  = document.getElementById('comb-name').value.trim();
+  if (!name) { toast('Saisis un nom !'); return; }
+  const init  = parseInt(document.getElementById('comb-init').value)  || 0;
+  const pdv   = parseInt(document.getElementById('comb-pdv').value)   || 10;
+  const armure= parseInt(document.getElementById('comb-armure').value)|| 0;
+  combatants.push({ name, init, pdv_cur:pdv, pdv_max:pdv, armure, risque_cur:4, risque_max:4, armes:[], debufs:[] });
+  combatants.sort((a,b) => b.init - a.init);
+  document.getElementById('comb-name').value = '';
+  document.getElementById('comb-init').value = '';
+  document.getElementById('comb-pdv').value  = '';
+  document.getElementById('comb-armure').value = '';
+  renderCombat(); renderWeaponDiceList();
+  toast(name + ' ajouté !');
+}
+
+function addPersoToCombat(idx) {
+  const p    = persos[idx];
+  const init = parseInt(prompt('Initiative pour ' + (p.nom||'ce perso') + ' :')) || 0;
+  const armesCopy = (p.armes||[]).map(a => ({ ...a }));
+  combatants.push({
+    name: p.nom||'Inconnu', role: getRoleById(p.role_id)?.nom||'', init,
+    pdv_cur: p.pdv_cur||p.pdv_max||10, pdv_max: p.pdv_max||10,
+    armure: p.armure||0, risque_cur: p.risque_cur||p.risque_max||4, risque_max: p.risque_max||4,
+    armes: armesCopy, debufs: [], persoIdx: idx
+  });
+  combatants.sort((a,b) => b.init - a.init);
+  renderCombat(); renderWeaponDiceList();
+  toast((p.nom||'Perso') + ' → Combat');
+}
+
+function rollAllInit() {
+  combatants.forEach(c => c.init = Math.floor(Math.random()*20)+1);
+  combatants.sort((a,b) => b.init - a.init);
+  currentTurn = 0; round = 1; renderCombat();
+  toast('Initiatives tirées !');
+}
+
+function nextTurn() {
+  if (!combatants.length) return;
+  currentTurn = (currentTurn+1) % combatants.length;
+  if (currentTurn === 0) round++;
+  renderCombat();
+}
+
+function clearCombat() {
+  if (!confirm('Effacer tout le combat ?')) return;
+  combatants = []; currentTurn = 0; round = 1;
+  renderCombat(); renderWeaponDiceList();
+}
+
+function removeCombatant(i) {
+  combatants.splice(i, 1);
+  if (currentTurn >= combatants.length && combatants.length) currentTurn = 0;
+  renderCombat(); renderWeaponDiceList();
+}
+
+function changeCombatHP(i, d) {
+  // Armure absorbe les dégâts entrants
+  const actual = d < 0 ? Math.min(d + (combatants[i].armure||0), 0) : d;
+  combatants[i].pdv_cur = Math.max(0, Math.min(combatants[i].pdv_max, combatants[i].pdv_cur + actual));
+  if (combatants[i].persoIdx !== undefined) {
+    persos[combatants[i].persoIdx].pdv_cur = combatants[i].pdv_cur; savePersos();
+  }
+  renderCombat();
+}
+
+function promptCombatHP(i) {
+  const v = prompt('Dégâts / soins pour ' + combatants[i].name + '\n(négatif = dégâts, positif = soins) :');
+  if (v !== null) { const d = parseInt(v); if (!isNaN(d)) changeCombatHP(i, d); }
+}
+
+function changeRisque(i, d) {
+  combatants[i].risque_cur = Math.max(0, Math.min(combatants[i].risque_max, combatants[i].risque_cur + d));
+  renderCombat();
+}
+
+function changeAmmo(ci, ai, d) {
+  const a = combatants[ci].armes[ai];
+  a.ammo_cur = Math.max(0, Math.min(a.ammo_max, (a.ammo_cur||0)+d));
+  // Sync perso
+  if (combatants[ci].persoIdx !== undefined) {
+    persos[combatants[ci].persoIdx].armes[ai].ammo_cur = a.ammo_cur; savePersos();
+  }
+  renderCombat();
+}
+
+function reloadAmmo(ci, ai) {
+  combatants[ci].armes[ai].ammo_cur = combatants[ci].armes[ai].ammo_max;
+  if (combatants[ci].persoIdx !== undefined) {
+    persos[combatants[ci].persoIdx].armes[ai].ammo_cur = combatants[ci].armes[ai].ammo_max; savePersos();
+  }
+  renderCombat(); toast('Rechargé !');
+}
+
+function renderCombat() {
+  const list   = document.getElementById('comb-list');
+  const banner = document.getElementById('turn-banner');
+  const ctrl   = document.getElementById('comb-controls');
+
+  if (!combatants.length) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">🎯</div>Aucun combattant.</div>`;
+    banner.style.display = 'none'; ctrl.style.display = 'none'; return;
+  }
+
+  const active = combatants[currentTurn % combatants.length];
+  banner.style.display = 'block';
+  banner.innerHTML = `<span class="round-tag">Round ${round}</span>▶ ${active.name}`;
+  ctrl.style.display = 'block';
+
+  list.innerHTML = combatants.map((c, i) => {
+    const isAct = i === currentTurn % combatants.length;
+    const dead  = c.pdv_cur <= 0;
+    const hpPct = c.pdv_max ? Math.round(c.pdv_cur/c.pdv_max*100) : 100;
+    const hpCol = hpPct > 50 ? 'var(--green)' : hpPct > 25 ? '#d4860a' : 'var(--red)';
+    const risPct= c.risque_max ? Math.round(c.risque_cur/c.risque_max*100) : 100;
+
+    const armesHtml = c.armes && c.armes.length ? c.armes.map((a,ai) => `
+      <div class="weapon-row" style="margin-bottom:4px">
+        <div class="weapon-row-top">
+          <span class="weapon-name" style="font-size:12px">${a.nom||'—'}</span>
+          <span class="weapon-dmg" style="font-size:11px">${a.degats||'—'}</span>
+        </div>
+        <div class="ammo-row">
+          <span class="ammo-label">🔴 Munitions</span>
+          <button class="ammo-btn" onclick="changeAmmo(${i},${ai},-1)">−</button>
+          <span class="ammo-val${a.ammo_cur===0?' ammo-empty':''}" style="font-size:13px;font-weight:900">
+            ${a.ammo_cur||0}/${a.ammo_max||0}
+          </span>
+          <button class="ammo-btn" onclick="changeAmmo(${i},${ai},1)">+</button>
+          <button class="ammo-btn" onclick="reloadAmmo(${i},${ai})" title="Recharger" style="font-size:13px;width:auto;padding:0 8px">↺</button>
+        </div>
+      </div>`).join('') : '';
+
+    return `<div class="combatant${isAct?' active-turn':''}${dead?' dead':''}">
+      <div class="comb-top">
+        <div class="comb-init">${c.init}</div>
+        <div style="flex:1">
+          <div class="comb-name">${c.name}${dead?' ☠':''}</div>
+          ${c.role ? `<div class="comb-role">${c.role}</div>` : ''}
+        </div>
+        <div style="display:flex;gap:4px;align-items:center">
+          <span style="font-size:11px;color:var(--text-muted)">Arm:${c.armure||0}</span>
+          <button onclick="removeCombatant(${i})" style="background:transparent;border:none;color:var(--text-muted);font-size:16px;cursor:pointer;padding:4px">✕</button>
+        </div>
+      </div>
+      <div class="comb-bars">
+        <div class="comb-bar-row">
+          <span class="comb-bar-label">PdS</span>
+          <div class="hp-bar" style="flex:1"><div class="hp-fill" style="width:${hpPct}%;background:${hpCol}"></div></div>
+          <span class="comb-bar-val" style="color:${hpCol}">${c.pdv_cur}/${c.pdv_max}</span>
+          <div class="hp-btns">
+            <div class="hp-btn minus" onclick="changeCombatHP(${i},-1)">−</div>
+            <div class="hp-btn plus"  onclick="changeCombatHP(${i},+1)">+</div>
+            <div class="hp-btn"       onclick="promptCombatHP(${i})" style="font-size:12px">±</div>
+          </div>
+        </div>
+        <div class="comb-bar-row">
+          <span class="comb-bar-label">Risque</span>
+          <div class="hp-bar" style="flex:1"><div class="hp-fill" style="width:${risPct}%;background:#d4860a"></div></div>
+          <span class="comb-bar-val">${c.risque_cur}/${c.risque_max}</span>
+          <div class="hp-btns">
+            <div class="hp-btn minus" onclick="changeRisque(${i},-1)">−</div>
+            <div class="hp-btn plus"  onclick="changeRisque(${i},+1)">+</div>
+          </div>
+        </div>
+      </div>
+      ${armesHtml}
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════
+// DÉS
+// ══════════════════════════════════════════════
+function rollDice(faces) {
+  const r = Math.floor(Math.random() * faces) + 1;
+  const el = document.getElementById('dice-num');
+  const lb = document.getElementById('dice-label');
+  el.textContent = r; lb.textContent = 'd' + faces;
+  el.classList.remove('rolling');
+  void el.offsetWidth; // force reflow
+  el.classList.add('rolling');
+  lastDice = { num: r, label: 'd' + faces };
+
+  // Coloration critique pour d20
+  if (faces === 20) {
+    el.style.color = r === 20 ? 'var(--green)' : r === 1 ? '#ff4444' : 'var(--red)';
+  } else {
+    el.style.color = 'var(--red)';
+  }
+}
+
+function rollMulti() {
+  const count = parseInt(document.getElementById('multi-count').value) || 1;
+  const type  = parseInt(document.getElementById('multi-type').value)  || 6;
+  const rolls = Array.from({length:count}, () => Math.floor(Math.random()*type)+1);
+  const total = rolls.reduce((a,b)=>a+b,0);
+  document.getElementById('multi-results').innerHTML =
+    `<span style="color:var(--text-muted)">Résultats : </span>${rolls.join(' + ')} = <b style="color:var(--red);font-size:16px">${total}</b>`;
+}
+
+function renderWeaponDiceList() {
+  const el = document.getElementById('weapon-dice-list');
+  if (!el) return;
+  const withArmes = combatants.filter(c => c.armes && c.armes.length);
+  if (!withArmes.length) {
+    el.innerHTML = '<div class="empty" style="padding:12px">Aucun combattant actif avec des armes.</div>';
+    return;
+  }
+  el.innerHTML = withArmes.map(c => c.armes.map(a => `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:5px">
+      <div>
+        <div style="font-size:12px;font-weight:700">${c.name} — ${a.nom||'Arme'}</div>
+        <div style="font-size:11px;color:var(--red)">${a.degats||'—'}</div>
+      </div>
+      <button class="btn btn-sm btn-red" onclick="rollWeaponDmg('${a.degats||'d6'}','${c.name}','${a.nom||''}')">
+        🎲 Dégâts
+      </button>
+    </div>`).join('')).join('');
+}
+
+function rollWeaponDmg(diceStr, combName, armeName) {
+  // Parse simple strings: "1d6", "2d8+2", "4 pts" etc.
+  const m = diceStr.match(/(\d+)d(\d+)([+-]\d+)?/i);
+  let result, label;
+  if (m) {
+    const count = parseInt(m[1])||1, faces = parseInt(m[2])||6, bonus = parseInt(m[3])||0;
+    const rolls = Array.from({length:count}, () => Math.floor(Math.random()*faces)+1);
+    result = rolls.reduce((a,b)=>a+b,0) + bonus;
+    label  = `${combName} · ${armeName} · ${diceStr}`;
+  } else {
+    result = parseInt(diceStr) || '?';
+    label  = `${combName} · ${armeName}`;
+  }
+  const el = document.getElementById('dice-num');
+  const lb = document.getElementById('dice-label');
+  el.textContent = result; lb.textContent = label;
+  el.style.color = 'var(--red)';
+  el.classList.remove('rolling'); void el.offsetWidth; el.classList.add('rolling');
+  showPage('des', document.querySelector('nav button:nth-child(3)'));
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+renderPersoList();
+renderCombat();
+</script>
+</body>
+</html>
